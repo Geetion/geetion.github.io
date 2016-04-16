@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Swift的页面跳转与传值" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/20/Swift的页面跳转与传值/" class="article-date">
+  <time datetime="2015-12-20T02:32:17.000Z" itemprop="datePublished">2015-12-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/20/Swift的页面跳转与传值/">Swift的页面跳转与传值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>虽然现在ios有了storyboard这个强大的可视化编程，但是个人还是喜欢用代码来编写页面跳转，首先说说用storyboard 的跳转和传值</p>
+<p>segue，用的最多 的就是这个东西，也很简单只是要用右键拖动需要点按的按钮拖到另一个界面就完成了页面的跳转工作，这里在inspector里面有一个kind选项，有5种可选值，最常用的两个就是model和push，model是直接弹出页面，而push需要在第一个页面拥有navigationbar的情况下才能使用，不然运行会报错，如果要用这种方式传值的话就需要用代码来实现了首先需要给这个segue添加一个identifier，在第一个viewcotroller里面用prepareforsegue编写逻辑</p>
+<p><pre class="prettyprint"><br>//    segue页面跳转</pre></p>
+<p><em>    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {</em></p>
+<p>/<em>如果设置了很多segue的话就需要判断传进来得id是哪一个segue的以此来定位segue</em>/</p>
+<p><em>        if segue.identifier == “rxNews” {   </em></p>
+<p>/<em>指定目标界面的viewcontroller</em>/</p>
+<p><em>            let vc = segue.destinationViewController as! WebViewController</em></p>
+<p>/传值过去，现在这个VC就是目标界面的viewcontroller，id是目标界面viewcontroller中得变量*/</p>
+<p><em>            vc.id = “123”</em></p>
+<p><em>        }</em></p>
+<p><em>}</em><br><br>下面再来说说用代码写界面跳转，顺便说说我遇到的几个坑：</p>
+<p>还是先说push，直接上代码我一开始写的是这样的</p>
+<p><pre class="prettyprint"><br><em>                    /<em>实例化webviewcontroller</em>/</em></pre></p>
+<p><em>        let push = WebViewController()</em></p>
+<p>/<em>传值</em>/</p>
+<p><em>        push.id = “123123”</em></p>
+<p><em>/<em>界面跳转</em>/</em></p>
+<p><em>        self.navigationController?.pushViewController(push, animated: true)</em></p>
+<p>虽然我为viewcontroller绑定了storyboard但是传过去以后黑乎乎的一片，于是后来改成了这样</p>
+<p><em>/实例化storyboard文件*/</em></p>
+<p><em>        var myStoryBoard = UIStoryboard(name: “Main”, bundle: nil)</em></p>
+<p><em>/<em>从storyboard里获取目标界面并绑定webviewcontroller</em>/</em></p>
+<p><em>        let push = myStoryBoard.instantiateViewControllerWithIdentifier(“webview”) as! WebViewController</em></p>
+<p><em>        push.id = “123123”</em></p>
+<p><em>        self.navigationController?.pushViewController(push, animated: true)</em><br><br>区别在于，第一种viewcontroller是直接生成的并没有绑定storyboard（即使你已经在对应的viewcontroller绑定了storyboard因为在你进行实例化操作的时候第二个页面还没有生成所有也就没有完成绑定操作）而第二种方法是从storyboard里面提取到界面然后绑定(特别注意:用什么方式跳转viewcontroller就用跳转那个跳转的viewcontroller进行传值)</p>
+<p>navigationbar还有很多页面跳转的方式，比如：</p>
+<p>跳转到这个navigation的第一个界面</p>
+<p><pre class="prettyprint"><br>self.navigationController?.popToRootViewControllerAnimated(true)<br></pre><br>返回到指定的viewcontroller（注意这里必须添这条navigationbar链里面出现过得viewcontroller，填别的运行报错）</p>
+<p><pre class="prettyprint"><br>self.navigationController?.popToViewController(XXXViewController, animated: true)<br></pre><br>接下来是present其实和model 的效果一样</p>
+<p><pre class="prettyprint"><br>self.presentViewController(XXXViewController, animated: true, completion: nil)<br></pre><br>和present专用的关闭回收界面的方式</p>
+<p><pre class="prettyprint"><br>self.dismissViewControllerAnimated(true, completion: nil)<br></pre><br>&nbsp;</p>
+<p>接下来是反向传值，就是第二个界面传值到第一个界面，这里我又被上面遇到的问题坑了一次</p>
+<p>协议传值</p>
+<p>我本来是这样写的，第一个页面</p>
+<p><pre class="prettyprint"><br>/<em>继承里面写协议名</em>/</pre></p>
+<p>class ViewController: UIViewController,ModeViewControlDelegate {</p>
+<p>@IBOutlet weak var lable: UILabel!</p>
+<p>/<em>实例化secondviewcontroller</em>/</p>
+<p>let second = SecondViewController()</p>
+<p>&nbsp;</p>
+<p>override func viewDidLoad() {</p>
+<p>super.viewDidLoad()</p>
+<p>/<em>设置secondviewcontroller的代理为本页面</em>/</p>
+<p>second.delegate = self</p>
+<p>}</p>
+<p>/<em>实现代理的方法</em>/</p>
+<p>func changeprint(newString:String){</p>
+<p>print(newString)</p>
+<p>}</p>
+<p>&nbsp;</p>
+<p>@IBAction func send(sender: AnyObject) {</p>
+<p>self.navigationController?.pushViewController(second, animated: true)</p>
+<p>}</p>
+<p>}</p>
+<p>第二个页面</p>
+<p>/<em>定义一个协议</em>/</p>
+<p>protocol ModeViewControlDelegate{</p>
+<p>func changeprint(newString:String)</p>
+<p>}</p>
+<p>class SecondViewController: UIViewController {</p>
+<p>/<em>实例化协议</em>/</p>
+<p>var delegate:ModeViewControlDelegate?</p>
+<p>override func viewDidLoad() {</p>
+<p>super.viewDidLoad()</p>
+<p>/<em>传值</em>/</p>
+<p>delegate!.changeprint(“123”)</p>
+<p>}</p>
+<p>&nbsp;</p>
+<p>@IBAction func delegateButton(sender: AnyObject) {</p>
+<p>self.navigationController?.popViewControllerAnimated(true)</p>
+<p>}</p>
+<p>}<br><br>大概流程就是先进入第一个viewcontroller点击按钮push到下一个view controller，第二个view controller生成完毕就传值给第一个view controller然后点击按钮返回第一个viewcontroller</p>
+<p>这样下来我发现并没有什么卵用，值没有传过去，其实和我在跳转那里写到的原因是一样的，我实例化的viewcontroller和界面跳转的viewcontoller不是同一个</p>
+<p>只要把    let second = SecondViewController()改成</p>
+<p><pre class="prettyprint"><br>let second = UIStoryboard(name: “Main”, bundle: nil).instantiateViewControllerWithIdentifier(“second”) as! SecondViewController就可以正常传值了<br></pre><br>&nbsp;</p>
+<p>闭包传值</p>
+<p><pre class="prettyprint"><br>//      第二页面</pre></p>
+<p>class SecondViewController: UIViewController {</p>
+<p>//    声明闭包</p>
+<p>var changeTitleClosure:((Title:String)-&gt;Void)?</p>
+<p>override func viewDidLoad() {</p>
+<p>super.viewDidLoad()</p>
+<p>//        发送数据</p>
+<p>changeTitleClosure!(Title: “123”)</p>
+<p>}</p>
+<p>override func didReceiveMemoryWarning() {</p>
+<p>super.didReceiveMemoryWarning()</p>
+<p>}</p>
+<p>@IBAction func closure(sender: AnyObject) {</p>
+<p>self.navigationController?.popViewControllerAnimated(true)</p>
+<p>}</p>
+<p>}</p>
+<p>//   第一个页面</p>
+<p>class FirstViewController: UIViewController {</p>
+<p>@IBOutlet weak var lable: UILabel!</p>
+<p>//    生成Viewcontroller</p>
+<p>let second = UIStoryboard(name: “Main”, bundle: nil).instantiateViewControllerWithIdentifier(“second”) as! SecondViewController</p>
+<p>&nbsp;</p>
+<p>override func viewDidLoad() {</p>
+<p>super.viewDidLoad()</p>
+<p>//        写好接收的方法</p>
+<p>second.changeTitleClosure = {(Title:String)-&gt;Void in</p>
+<p>self.lable.text = Title</p>
+<p>}</p>
+<p>}</p>
+<p>override func didReceiveMemoryWarning() {</p>
+<p>super.didReceiveMemoryWarning()</p>
+<p>}</p>
+<p>@IBAction func send(sender: AnyObject) {</p>
+<p>self.navigationController?.pushViewController(second, animated: true)</p>
+<p>}</p>
+<p>}<br><br>[player autoplay=”1”]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/12/20/Swift的页面跳转与传值/" data-id="cin2zlt3c0009lf80bld8brnx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift/">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/传值/">传值</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反向传值/">反向传值</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/跳转/">跳转</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术向/">技术向</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动前端/">移动前端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IOS/">IOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextField/">TextField</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Viewdidload/">Viewdidload</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nil/">nil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/传值/">传值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/判断/">判断</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/反向传值/">反向传值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跳转/">跳转</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/顺序/">顺序</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/IOS/" style="font-size: 20px;">IOS</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TextField/" style="font-size: 10px;">TextField</a> <a href="/tags/Viewdidload/" style="font-size: 10px;">Viewdidload</a> <a href="/tags/nil/" style="font-size: 10px;">nil</a> <a href="/tags/传值/" style="font-size: 10px;">传值</a> <a href="/tags/判断/" style="font-size: 10px;">判断</a> <a href="/tags/反向传值/" style="font-size: 10px;">反向传值</a> <a href="/tags/跳转/" style="font-size: 10px;">跳转</a> <a href="/tags/顺序/" style="font-size: 10px;">顺序</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/04/16/BroadCast广播机制/">BroadCast广播机制</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/01/iOS本地数据存储之CoreData/">iOS本地数据存储之CoreData</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/09/关于protocol的一些问题及解决办法/">关于protocol的一些问题及解决办法</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/27/iOS本地数据存储之UserDefault/">iOS本地数据存储之UserDefault</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/19/判断TextField为空引发的问题/">判断TextField为空引发的问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
