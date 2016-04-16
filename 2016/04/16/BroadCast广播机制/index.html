@@ -6,27 +6,18 @@
   <title>BroadCast广播机制 | 孤航</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="为了方便系统级别的消息通知，安卓引入了一套广播消息机制。广播主要分为两种：1.标准广播：异步执行互不干涉2.有序广播：进行完一个才能接着进行下一条广播
-接收广播方式：1.动态注册监听飞行模式在Activity里面注册
-
-//初始化接收器
-AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateChange">
+接收广播方式：1.动态注册监听飞行模式在Activity里面注册12345678//初始化接收器AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BroadCast广播机制">
-<meta property="og:url" content="http://yoursite.com/2016/04/16/BroadCast广播机制/index.html">
+<meta property="og:url" content="http://ccjason.com/2016/04/16/BroadCast广播机制/index.html">
 <meta property="og:site_name" content="孤航">
 <meta property="og:description" content="为了方便系统级别的消息通知，安卓引入了一套广播消息机制。广播主要分为两种：1.标准广播：异步执行互不干涉2.有序广播：进行完一个才能接着进行下一条广播
-接收广播方式：1.动态注册监听飞行模式在Activity里面注册
-
-//初始化接收器
-AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateChange">
-<meta property="og:updated_time" content="2016-04-16T05:14:46.000Z">
+接收广播方式：1.动态注册监听飞行模式在Activity里面注册12345678//初始化接收器AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateC">
+<meta property="og:updated_time" content="2016-04-16T12:42:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BroadCast广播机制">
 <meta name="twitter:description" content="为了方便系统级别的消息通知，安卓引入了一套广播消息机制。广播主要分为两种：1.标准广播：异步执行互不干涉2.有序广播：进行完一个才能接着进行下一条广播
-接收广播方式：1.动态注册监听飞行模式在Activity里面注册
-
-//初始化接收器
-AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateChange">
+接收广播方式：1.动态注册监听飞行模式在Activity里面注册12345678//初始化接收器AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateC">
   
     <link rel="alternate" href="/atom.xml" title="孤航" type="application/atom+xml">
   
@@ -73,7 +64,7 @@ AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateChang
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ccjason.com"></form>
       </div>
     </div>
   </div>
@@ -106,58 +97,18 @@ AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateChang
     <div class="article-entry" itemprop="articleBody">
       
         <p>为了方便系统级别的消息通知，安卓引入了一套广播消息机制。<br>广播主要分为两种：<br>1.标准广播：异步执行互不干涉<br>2.有序广播：进行完一个才能接着进行下一条广播</p>
-<p>接收广播方式：<br>1.动态注册监听飞行模式<br>在Activity里面注册</p>
-<pre class="prettyprint">
-//初始化接收器
-AirplaneStateChangeRecevier airplaneStateChangeRecevier = new AirplaneStateChangeRecevier();
-//初始化意图筛选器传入要接受的广播类型
-IntentFilter intentFilter = new IntentFilter("android.intent.action.AIRPLANE_MODE");
-//注册接收器
-//第一个参数：传入一个接收器用来接收广播
-//第二个参数：传入意图筛选器
-registerReceiver(airplaneStateChangeRecevier,intentFilter)；
-</pre>
-记得在Activity销毁的时候进行注销操作，不然会报错
-<pre class="prettyprint">
-unregisterReceiver(airplaneStateChangeRecevier);
-</pre>
-建立一个类继承于BroadcastReciever，当接收到广播时会执行OnRecevie方法，重写onRecevie方法实现功能
-<pre class="prettyprint">
-    public class AirplaneStateChangeRecevier extends BroadcastReceiver{
+<p>接收广播方式：<br>1.动态注册监听飞行模式<br>在Activity里面注册<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化接收器</span></span><br><span class="line">AirplaneStateChangeRecevier airplaneStateChangeRecevier = <span class="keyword">new</span> AirplaneStateChangeRecevier();</span><br><span class="line"><span class="comment">//初始化意图筛选器传入要接受的广播类型</span></span><br><span class="line">IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter(<span class="string">"android.intent.action.AIRPLANE_MODE"</span>);</span><br><span class="line"><span class="comment">//注册接收器</span></span><br><span class="line"><span class="comment">//第一个参数：传入一个接收器用来接收广播</span></span><br><span class="line"><span class="comment">//第二个参数：传入意图筛选器</span></span><br><span class="line">registerReceiver(airplaneStateChangeRecevier,intentFilter)；</span><br></pre></td></tr></table></figure></p>
+<p>记得在Activity销毁的时候进行注销操作，不然会报错<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unregisterReceiver(airplaneStateChangeRecevier);</span><br></pre></td></tr></table></figure></p>
+<p>建立一个类继承于BroadcastReciever，当接收到广播时会执行OnRecevie方法，重写onRecevie方法实现功能<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AirplaneStateChangeRecevier</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">        Toast.makeText(MainActivity.<span class="keyword">this</span>,<span class="string">"7777"</span>,Toast.LENGTH_LONG);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.静态注册监听飞行模式<br>在AndroidManifest文件中写好意图筛选<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//这里填写接收器的类名</span><br><span class="line">        <span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">".AirplaneStateChangeRecevier"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">//需要接受的广播名，和动态生成很类似</span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.AIRPLANE_MODE"</span>&gt;</span><span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>当然你也可以自定义广播，只需要把action里面的接收广播名填写自定义名称即可，这样做当然不会再有广播发过来了，那么你只有自己在需要的时候发送这条广播,例如我把action里面的名字改成了heheBroadCAST,然后在我需要的时候我只需要生成一个意图然后发送广播就可以了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"heheBroadCAST"</span>);</span><br><span class="line">sendBroadcast(intent);</span><br></pre></td></tr></table></figure></p>
+<p>想要发送有序广播和标准广播很类似，只需要把sendBroadCast改为<br>sendOrderedBroadcast();<br>这里会接收两个参数一个是参数接收器的句柄，另一个是权限相关字符，一般只需要传入Null就行<br>这样方式发送的标准广播不仅自己能接收到，如果别的程序也定义了相同的广播接收类型那么你发送的广播就会发送到别的应用程序，最关键的是你的应用程序有可能会接收到别的程序发来的消息，而很多消息可能是无用的，那么我们就需要使用本地通知了,也非常简单只需要获取到LocalBroadcastManager的单例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure></p>
+<p>然后使用LocalBroadcastManager发送注册通知即可,像这样<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">localBroadcastManager.sendBroadcast();</span><br><span class="line">localBroadcastManager.registerReceiver();</span><br><span class="line">localBroadcastManager.unregisterReceiver();</span><br></pre></td></tr></table></figure></p>
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(MainActivity.this,"7777",Toast.LENGTH_LONG);
-        }
-    }
-</pre>
-
-<p>2.静态注册监听飞行模式<br>在AndroidManifest文件中写好意图筛选</p>
-<pre class="prettyprint">
-//这里填写接收器的类名
-        <receiver android:name=".AirplaneStateChangeRecevier">
-            <intent-filter>
-//需要接受的广播名，和动态生成很类似
-                <action android:name="android.intent.action.AIRPLANE_MODE"></action>
-            </intent-filter>
-        </receiver>
-</pre>
-当然你也可以自定义广播，只需要把action里面的接收广播名填写自定义名称即可，这样做当然不会再有广播发过来了，那么你只有自己在需要的时候发送这条广播,例如我把action里面的名字改成了heheBroadCAST,然后在我需要的时候我只需要生成一个意图然后发送广播就可以了
-<pre class="prettyprint">
-        Intent intent = new Intent("heheBroadCAST");
-        sendBroadcast(intent);
-</pre>
-
-<p>想要发送有序广播和标准广播很类似，只需要把sendBroadCast改为<br>sendOrderedBroadcast();<br>这里会接收两个参数一个是参数接收器的句柄，另一个是权限相关字符，一般只需要传入Null就行<br>这样方式发送的标准广播不仅自己能接收到，如果别的程序也定义了相同的广播接收类型那么你发送的广播就会发送到别的应用程序，最关键的是你的应用程序有可能会接收到别的程序发来的消息，而很多消息可能是无用的，那么我们就需要使用本地通知了,也非常简单只需要获取到LocalBroadcastManager的单例<br>LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);<br>然后使用LocalBroadcastManager发送注册通知即可,像这样</p>
-<pre class="prettyprint">
-        localBroadcastManager.sendBroadcast();
-        localBroadcastManager.registerReceiver();
-        localBroadcastManager.unregisterReceiver();
-</pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/16/BroadCast广播机制/" data-id="cin334u7d0000u1800w0li4yg" class="article-share-link">Share</a>
+      <a data-url="http://ccjason.com/2016/04/16/BroadCast广播机制/" data-id="cin34exdj0001ww80nlw4v0n4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -214,7 +165,7 @@ unregisterReceiver(airplaneStateChangeRecevier);
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li></ul>
     </div>
   </div>
 

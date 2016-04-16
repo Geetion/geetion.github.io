@@ -5,52 +5,16 @@
   
   <title>iOS熊孩子重复点击View问题的解决办法 | 孤航</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码
-
-class Delay:NSObject{
-&amp;nbsp;
-&amp;nbsp;
-
-
-//声明一个bool值变量标示点击状态
-static var showStatus = true
-&amp;nbsp;
-&amp;nbsp;
-/**
-参数taget:传入上下文以便于">
+  <meta name="description" content="虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455 class Delay:NSObject&amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS熊孩子重复点击View问题的解决办法">
-<meta property="og:url" content="http://yoursite.com/2016/02/11/iOS熊孩子重复点击View问题的解决办法/index.html">
+<meta property="og:url" content="http://ccjason.com/2016/02/11/iOS熊孩子重复点击View问题的解决办法/index.html">
 <meta property="og:site_name" content="孤航">
-<meta property="og:description" content="虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码
-
-class Delay:NSObject{
-&amp;nbsp;
-&amp;nbsp;
-
-
-//声明一个bool值变量标示点击状态
-static var showStatus = true
-&amp;nbsp;
-&amp;nbsp;
-/**
-参数taget:传入上下文以便于">
-<meta property="og:updated_time" content="2016-04-16T05:14:46.000Z">
+<meta property="og:description" content="虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455 class Delay:NSObject&amp;">
+<meta property="og:updated_time" content="2016-04-16T12:49:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS熊孩子重复点击View问题的解决办法">
-<meta name="twitter:description" content="虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码
-
-class Delay:NSObject{
-&amp;nbsp;
-&amp;nbsp;
-
-
-//声明一个bool值变量标示点击状态
-static var showStatus = true
-&amp;nbsp;
-&amp;nbsp;
-/**
-参数taget:传入上下文以便于">
+<meta name="twitter:description" content="虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455 class Delay:NSObject&amp;">
   
     <link rel="alternate" href="/atom.xml" title="孤航" type="application/atom+xml">
   
@@ -97,7 +61,7 @@ static var showStatus = true
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ccjason.com"></form>
       </div>
     </div>
   </div>
@@ -129,48 +93,14 @@ static var showStatus = true
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码</p>
-<blockquote>
-<p>class Delay:NSObject{</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<pre class="prettyprint">
-
-<p>//声明一个bool值变量标示点击状态</p>
-<p>static var showStatus = true</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>/**</p>
-<p>参数taget:传入上下文以便于执行selector</p>
-<p>参数ti：传入间隔时长</p>
-<p>参数selector：传入一个需要执行的selector</p>
-<p>*/</p>
-<p>static func delaySelectorWithTimeInterva(target aTarget: AnyObject,ti: NSTimeInterval,selector aSelector: Selector){</p>
-<p>&nbsp;</p>
-<p>//判断执行状态如果可以执行则运行代码</p>
-<p>if showStatus{</p>
-<p>//执行传入的selector</p>
-<p>aTarget.performSelector(aSelector)</p>
-<p>//将执行状态设置为false</p>
-<p>showStatus = false</p>
-<p>//延迟一段时间后执行changShowStatus方法将执行状态设置为true</p>
-<p>NSTimer.scheduledTimerWithTimeInterval(ti, target: self, selector: “changeShowStatus”, userInfo: nil, repeats: false)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>static func changeShowStatus(){</p>
-<p>//将执行状态设置为true</p>
-<p>showStatus = true</p>
-<p>}</p>
-<p>}<br>然后调用的时候直接用</p>
-</pre></blockquote>
-<p>Delay.delaySelectorWithTimeInterva(target: self,ti: 2, selector: “show”)<br><br>就可以了，还是比较简单的</p>
+        <p>虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">Delay</span>:<span class="title">NSObject</span></span>&#123; </span><br><span class="line">   <span class="comment">//声明一个bool值变量标示点击状态</span>  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">var</span> showStatus = <span class="literal">true</span>  </span><br><span class="line">  </span><br><span class="line">  &amp;nbsp;  </span><br><span class="line">  </span><br><span class="line">  &amp;nbsp;  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**  </span><br><span class="line">  </span><br><span class="line">  参数taget:传入上下文以便于执行selector  </span><br><span class="line">  </span><br><span class="line">  参数ti：传入间隔时长  </span><br><span class="line">  </span><br><span class="line">  参数selector：传入一个需要执行的selector  </span><br><span class="line">  </span><br><span class="line">  */</span>  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">delaySelectorWithTimeInterva</span><span class="params">(target aTarget: AnyObject,ti: NSTimeInterval,selector aSelector: Selector)</span></span>&#123;  </span><br><span class="line">  </span><br><span class="line">  &amp;nbsp;  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//判断执行状态如果可以执行则运行代码</span>  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> showStatus&#123;  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//执行传入的selector</span>  </span><br><span class="line">  </span><br><span class="line">  aTarget.performSelector(aSelector)  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//将执行状态设置为false</span>  </span><br><span class="line">  </span><br><span class="line">  showStatus = <span class="literal">false</span>  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//延迟一段时间后执行changShowStatus方法将执行状态设置为true</span>  </span><br><span class="line">  </span><br><span class="line">  <span class="type">NSTimer</span>.scheduledTimerWithTimeInterval(ti, target: <span class="keyword">self</span>, selector: <span class="string">"changeShowStatus"</span>, userInfo: <span class="literal">nil</span>, repeats: <span class="literal">false</span>)  </span><br><span class="line">  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  &amp;nbsp;  </span><br><span class="line">  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  &amp;nbsp;  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">changeShowStatus</span><span class="params">()</span></span>&#123;  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">//将执行状态设置为true</span>  </span><br><span class="line">  </span><br><span class="line">  showStatus = <span class="literal">true</span>  </span><br><span class="line">  </span><br><span class="line">  &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后调用的时候直接用<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Delay</span>.delaySelectorWithTimeInterva(target: <span class="keyword">self</span>,ti: <span class="number">2</span>, selector: <span class="string">"show"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>就可以了，还是比较简单的</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/02/11/iOS熊孩子重复点击View问题的解决办法/" data-id="cin334u7u000au180l1otv7vj" class="article-share-link">Share</a>
+      <a data-url="http://ccjason.com/2016/02/11/iOS熊孩子重复点击View问题的解决办法/" data-id="cin34exdy000aww80qy9gf61g" class="article-share-link">Share</a>
       
       
     </footer>
@@ -236,7 +166,7 @@ static var showStatus = true
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li></ul>
     </div>
   </div>
 

@@ -8,10 +8,10 @@
   <meta name="description" content="Core Data是苹果官方推荐的数据存储方式，相当于一个已经封装好了的数据库，如果学过sql的童鞋理解起来肯对会比较容易，说实话我是先接触的Core Data后来学PHP才开始了解Sql，所以一开始真的什么都记不住也不知道为什么，就是照猫画虎的用，所以现在回来重新梳理一下这个知识结构，顺便与SQL做对比方便后来人理解。开启了Core Data的项目里面会多出来一个以xcdatamodeld为后缀">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS本地数据存储之CoreData">
-<meta property="og:url" content="http://yoursite.com/2016/04/01/iOS本地数据存储之CoreData/index.html">
+<meta property="og:url" content="http://ccjason.com/2016/04/01/iOS本地数据存储之CoreData/index.html">
 <meta property="og:site_name" content="孤航">
 <meta property="og:description" content="Core Data是苹果官方推荐的数据存储方式，相当于一个已经封装好了的数据库，如果学过sql的童鞋理解起来肯对会比较容易，说实话我是先接触的Core Data后来学PHP才开始了解Sql，所以一开始真的什么都记不住也不知道为什么，就是照猫画虎的用，所以现在回来重新梳理一下这个知识结构，顺便与SQL做对比方便后来人理解。开启了Core Data的项目里面会多出来一个以xcdatamodeld为后缀">
-<meta property="og:updated_time" content="2016-04-16T05:14:46.000Z">
+<meta property="og:updated_time" content="2016-04-16T12:43:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS本地数据存储之CoreData">
 <meta name="twitter:description" content="Core Data是苹果官方推荐的数据存储方式，相当于一个已经封装好了的数据库，如果学过sql的童鞋理解起来肯对会比较容易，说实话我是先接触的Core Data后来学PHP才开始了解Sql，所以一开始真的什么都记不住也不知道为什么，就是照猫画虎的用，所以现在回来重新梳理一下这个知识结构，顺便与SQL做对比方便后来人理解。开启了Core Data的项目里面会多出来一个以xcdatamodeld为后缀">
@@ -61,7 +61,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ccjason.com"></form>
       </div>
     </div>
   </div>
@@ -93,38 +93,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Core Data是苹果官方推荐的数据存储方式，相当于一个已经封装好了的数据库，如果学过sql的童鞋理解起来肯对会比较容易，说实话我是先接触的Core Data后来学PHP才开始了解Sql，所以一开始真的什么都记不住也不知道为什么，就是照猫画虎的用，所以现在回来重新梳理一下这个知识结构，顺便与SQL做对比方便后来人理解。<br>开启了Core Data的项目里面会多出来一个以xcdatamodeld为后缀的文件，这个文件就相当于Mysql里面的database数据库，需要用creat database XXX来创建在这里苹果已经为大家准备好了。<br>先说下MYSQL的命令行操作，需要先建立一个table在数据库里，也就是一个数据模型，所有的数据组都需要遵守这个模型，也就是Core Data文件里面的entities，想要存储一组数据就要先在这里定义好这组数据每个变量的类型和名称。<br>0.Mysql的数据库操作<br>在PHP里面操作Mysql数据库是需要先进行数据库连接的：</p>
-<pre class="prettyprint">
-    header('Content-type:text/html;charset = utf-8');
-    define('HOST', 'localhost');//设定地址
-    define('USERNAME', 'root');//设定数据库用户名
-    define('PASSWORD', '');//设定数据库密码
-
-    $con = mysql_connect(HOST,USERNAME,PASSWORD)//连接数据库
-    mysql_select_db('test') //选择数据库
-</pre>
-而在Core Data里面则完全不需要管这些，因为一个项目也就这一个数据库，在Swift项目里面要使用的时候只需要获取一个上下文
-<pre class="prettyprint">
-var context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-</pre>
-为了方便管理数据我们可以让xcode给我们自动生成一个已经建好的entity的数据模型只需要在项目里面新建文件选择core data然后选择NSManagedObject Subclass，在这里如果是使用swift得项目的话需要建立一个bridge header文件导入这个oc的subclass
-![3ADA15BB-C31F-4FC8-953C-FFC1ADD6EE95](http://www.ccjason.me/wp-content/uploads/2016/04/3ADA15BB-C31F-4FC8-953C-FFC1ADD6EE95-640x454.jpg)
-1.插入数据
-插入数据在mysql里面是需要语句
-<pre class="prettyprint">
-"insert into tableName(title,author,description,content,dateline) values('title','author','description','content','dateline')"
-</pre>
-也就是向名为tableName的table里面插入5个数据分别是title，author，description，content和dataline，这5个变量的值在后面value里面按顺序一一对应。
-而在Core Data里面变成了这样
-<pre class="prettyprint">
-let row = NSEntityDescription.insertNewObjectForEntityForName("tableName", inManagedObjectContext: self.context);//声明了一个entity模型用来插入名为TableName的entity
-row.setValue(title, forKey: "title")；//分别向这个entity模型里面通过键值对的形式插入所需要的变量
-row.setValue(description, forKey: "description")；
-row.setValue(content, forKey: "content")；
-row.setValue(dateline, forKey: "dateline")；
-self.context.save()//让数据库存储改变
-</pre>
-
+        <p>Core Data是苹果官方推荐的数据存储方式，相当于一个已经封装好了的数据库，如果学过sql的童鞋理解起来肯对会比较容易，说实话我是先接触的Core Data后来学PHP才开始了解Sql，所以一开始真的什么都记不住也不知道为什么，就是照猫画虎的用，所以现在回来重新梳理一下这个知识结构，顺便与SQL做对比方便后来人理解。<br>开启了Core Data的项目里面会多出来一个以xcdatamodeld为后缀的文件，这个文件就相当于Mysql里面的database数据库，需要用creat database XXX来创建在这里苹果已经为大家准备好了。<br>先说下MYSQL的命令行操作，需要先建立一个table在数据库里，也就是一个数据模型，所有的数据组都需要遵守这个模型，也就是Core Data文件里面的entities，想要存储一组数据就要先在这里定义好这组数据每个变量的类型和名称。<br>0.Mysql的数据库操作<br>在PHP里面操作Mysql数据库是需要先进行数据库连接的：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">header(<span class="string">'Content-type:text/html;charset = utf-8'</span>);</span><br><span class="line">define(<span class="string">'HOST'</span>, <span class="string">'localhost'</span>);<span class="comment">//设定地址</span></span><br><span class="line">define(<span class="string">'USERNAME'</span>, <span class="string">'root'</span>);<span class="comment">//设定数据库用户名</span></span><br><span class="line">define(<span class="string">'PASSWORD'</span>, <span class="string">''</span>);<span class="comment">//设定数据库密码</span></span><br><span class="line"></span><br><span class="line">$con = mysql_connect(HOST,USERNAME,PASSWORD)<span class="comment">//连接数据库</span></span><br><span class="line">mysql_select_db(<span class="string">'test'</span>) <span class="comment">//选择数据库</span></span><br></pre></td></tr></table></figure></p>
+<p>而在Core Data里面则完全不需要管这些，因为一个项目也就这一个数据库，在Swift项目里面要使用的时候只需要获取一个上下文<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> context = (<span class="type">UIApplication</span>.sharedApplication().delegate <span class="keyword">as</span>! <span class="type">AppDelegate</span>).managedObjectContext</span><br></pre></td></tr></table></figure></p>
+<p>为了方便管理数据我们可以让xcode给我们自动生成一个已经建好的entity的数据模型只需要在项目里面新建文件选择core data然后选择NSManagedObject Subclass，在这里如果是使用swift得项目的话需要建立一个bridge header文件导入这个oc的subclass</p>
+<p>1.插入数据<br>插入数据在mysql里面是需要语句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;insert into tableName(title,author,description,content,dateline) values(&apos;title&apos;,&apos;author&apos;,&apos;description&apos;,&apos;content&apos;,&apos;dateline&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>也就是向名为tableName的table里面插入5个数据分别是title，author，description，content和dataline，这5个变量的值在后面value里面按顺序一一对应。<br>而在Core Data里面变成了这样<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> row = <span class="type">NSEntityDescription</span>.insertNewObjectForEntityForName(<span class="string">"tableName"</span>, inManagedObjectContext: <span class="keyword">self</span>.context);<span class="comment">//声明了一个entity模型用来插入名为TableName的entity</span></span><br><span class="line">row.setValue(title, forKey: <span class="string">"title"</span>)；<span class="comment">//分别向这个entity模型里面通过键值对的形式插入所需要的变量</span></span><br><span class="line">row.setValue(description, forKey: <span class="string">"description"</span>)；</span><br><span class="line">row.setValue(content, forKey: <span class="string">"content"</span>)；</span><br><span class="line">row.setValue(dateline, forKey: <span class="string">"dateline"</span>)；</span><br><span class="line"><span class="keyword">self</span>.context.save()<span class="comment">//让数据库存储改变</span></span><br></pre></td></tr></table></figure></p>
 <p>2.删除数据<br>使用PHP删除Mysql里面数据需要：</p>
 <pre class="prettyprint">
 require('connect.php');
@@ -143,7 +116,7 @@ var array = try! context.executeFetchRequest(fetch)//执行获取数据操作，
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/01/iOS本地数据存储之CoreData/" data-id="cin334u7p0005u180xjh6bxl1" class="article-share-link">Share</a>
+      <a data-url="http://ccjason.com/2016/04/01/iOS本地数据存储之CoreData/" data-id="cin34exdq0005ww8066r765q4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -209,7 +182,7 @@ var array = try! context.executeFetchRequest(fetch)//执行获取数据操作，
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li></ul>
     </div>
   </div>
 

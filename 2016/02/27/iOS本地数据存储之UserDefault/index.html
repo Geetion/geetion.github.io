@@ -6,27 +6,24 @@
   <title>iOS本地数据存储之UserDefault | 孤航</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="首先是最简单的userDefault：
-这个的存取都非常方便，只要先初始化一个userDefault
-var userdefault = NSUserDefaults.standardUserDefaults()存储一个数据
-userdefault.setObject(yourData, forKey: “dataKey”)可以根据情况使用setbool,setfloat等等，读取数据
-data">
+这个的存取都非常方便，只要先初始化一个userDefault1var userdefault = NSUserDefaults.standardUserDefaults()
+存储一个数据1userdefault.setObject(yourData, forKey: “dataKey”)
+可以根据情况使用setbool,setfloat等等，读取数据1dat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS本地数据存储之UserDefault">
-<meta property="og:url" content="http://yoursite.com/2016/02/27/iOS本地数据存储之UserDefault/index.html">
+<meta property="og:url" content="http://ccjason.com/2016/02/27/iOS本地数据存储之UserDefault/index.html">
 <meta property="og:site_name" content="孤航">
 <meta property="og:description" content="首先是最简单的userDefault：
-这个的存取都非常方便，只要先初始化一个userDefault
-var userdefault = NSUserDefaults.standardUserDefaults()存储一个数据
-userdefault.setObject(yourData, forKey: “dataKey”)可以根据情况使用setbool,setfloat等等，读取数据
-data">
-<meta property="og:updated_time" content="2016-04-16T05:14:46.000Z">
+这个的存取都非常方便，只要先初始化一个userDefault1var userdefault = NSUserDefaults.standardUserDefaults()
+存储一个数据1userdefault.setObject(yourData, forKey: “dataKey”)
+可以根据情况使用setbool,setfloat等等，读取数据1dat">
+<meta property="og:updated_time" content="2016-04-16T12:46:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS本地数据存储之UserDefault">
 <meta name="twitter:description" content="首先是最简单的userDefault：
-这个的存取都非常方便，只要先初始化一个userDefault
-var userdefault = NSUserDefaults.standardUserDefaults()存储一个数据
-userdefault.setObject(yourData, forKey: “dataKey”)可以根据情况使用setbool,setfloat等等，读取数据
-data">
+这个的存取都非常方便，只要先初始化一个userDefault1var userdefault = NSUserDefaults.standardUserDefaults()
+存储一个数据1userdefault.setObject(yourData, forKey: “dataKey”)
+可以根据情况使用setbool,setfloat等等，读取数据1dat">
   
     <link rel="alternate" href="/atom.xml" title="孤航" type="application/atom+xml">
   
@@ -73,7 +70,7 @@ data">
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ccjason.com"></form>
       </div>
     </div>
   </div>
@@ -106,41 +103,16 @@ data">
     <div class="article-entry" itemprop="articleBody">
       
         <p>首先是最简单的userDefault：</p>
-<p>这个的存取都非常方便，只要先初始化一个userDefault</p>
-<p><pre class="prettyprint"><br>var userdefault = NSUserDefaults.standardUserDefaults()<br></pre><br>存储一个数据</p>
-<p><pre class="prettyprint"><br>userdefault.setObject(yourData, forKey: “dataKey”)<br></pre><br>可以根据情况使用setbool,setfloat等等，读取数据</p>
-<p><pre class="prettyprint"><br>data = userdefault.objectForKey(“dataKey”)<br></pre><br>就这么简单，但是userDefault能存储的只有一般形式的东西，比如bool，string等等，如果需要自定义一个object就需要写遵守NScoding方法了，存储这些东西的过程就像打包一个包裹然后扔进仓库，拿出来的时候要先解包才能使用，举个栗子</p>
-<p><pre class="prettyprint"><br>class NewsItem:NSObject,NSCoding {</pre></p>
-<p>//自定义objetc里面的各种数据</p>
-<p>var title = String()</p>
-<p>var author = String()</p>
-<p>var url = String()</p>
+<p>这个的存取都非常方便，只要先初始化一个userDefault<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> userdefault = <span class="type">NSUserDefaults</span>.standardUserDefaults()</span><br></pre></td></tr></table></figure></p>
+<p>存储一个数据<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdefault.setObject(yourData, forKey: “dataKey”)</span><br></pre></td></tr></table></figure></p>
+<p>可以根据情况使用setbool,setfloat等等，读取数据<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = userdefault.objectForKey(“dataKey”)</span><br></pre></td></tr></table></figure></p>
+<p>就这么简单，但是userDefault能存储的只有一般形式的东西，比如bool，string等等，如果需要自定义一个object就需要写遵守NScoding方法了，存储这些东西的过程就像打包一个包裹然后扔进仓库，拿出来的时候要先解包才能使用，举个栗子<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsItem</span>:<span class="title">NSObject</span>,<span class="title">NSCoding</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//自定义objetc里面的各种数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> title = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> author = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> url = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="keyword">init</span>() &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="comment">//解包数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">required</span> <span class="keyword">init</span>?(coder aDecoder: <span class="type">NSCoder</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过键值对的形式取出数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.title = aDecoder.decodeObjectForKey(<span class="string">"title"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.author = aDecoder.decodeObjectForKey(<span class="string">"author"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.url = aDecoder.decodeObjectForKey(<span class="string">"url"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="comment">//打包数据</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">encodeWithCoder</span><span class="params">(aCoder: NSCoder)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过键值对的形式存入数据</span></span><br><span class="line"></span><br><span class="line">aCoder.encodeObject(title, forKey: <span class="string">"title"</span>)</span><br><span class="line"></span><br><span class="line">aCoder.encodeObject(author, forKey: <span class="string">"author"</span>)</span><br><span class="line"></span><br><span class="line">aCoder.encodeObject(url, forKey: <span class="string">"url"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>&nbsp;</p>
-<p>override init() {</p>
-<p>super.init()</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>//解包数据</p>
-<p>required init?(coder aDecoder: NSCoder) {</p>
-<p>//通过键值对的形式取出数据</p>
-<p>self.title = aDecoder.decodeObjectForKey(“title”) as! String</p>
-<p>self.author = aDecoder.decodeObjectForKey(“author”) as! String</p>
-<p>self.url = aDecoder.decodeObjectForKey(“url”) as! String</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>//打包数据</p>
-<p>func encodeWithCoder(aCoder: NSCoder) {</p>
-<p>//通过键值对的形式存入数据</p>
-<p>aCoder.encodeObject(title, forKey: “title”)</p>
-<p>aCoder.encodeObject(author, forKey: “author”)</p>
-<p>aCoder.encodeObject(url, forKey: “url”)</p>
-<p>}</p>
-<p>}<br><br>&nbsp;</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/02/27/iOS本地数据存储之UserDefault/" data-id="cin334u7t0008u180rdrp76cy" class="article-share-link">Share</a>
+      <a data-url="http://ccjason.com/2016/02/27/iOS本地数据存储之UserDefault/" data-id="cin34exdu0008ww80ymqxxv09" class="article-share-link">Share</a>
       
       
     </footer>
@@ -206,7 +178,7 @@ data">
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li></ul>
     </div>
   </div>
 

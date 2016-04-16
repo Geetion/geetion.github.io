@@ -6,51 +6,21 @@
   <title>关于protocol的一些问题及解决办法 | 孤航</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="使用代理模式的时候需要用到protocol，有的时候会用到optional可选方法
-如果直接这样写肯定会报错
-
-
-protocol WaterFallFlowLayoutDatasource{
-
-optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&amp;gt;Int
-
-}
-
-
-
-报错： ‘optional’ ca">
+如果直接这样写肯定会报错123456protocol WaterFallFlowLayoutDatasource&amp;#123;optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&amp;amp;gt;Int&amp;#125;
+报错： ‘op">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于protocol的一些问题及解决办法">
-<meta property="og:url" content="http://yoursite.com/2016/03/09/关于protocol的一些问题及解决办法/index.html">
+<meta property="og:url" content="http://ccjason.com/2016/03/09/关于protocol的一些问题及解决办法/index.html">
 <meta property="og:site_name" content="孤航">
 <meta property="og:description" content="使用代理模式的时候需要用到protocol，有的时候会用到optional可选方法
-如果直接这样写肯定会报错
-
-
-protocol WaterFallFlowLayoutDatasource{
-
-optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&amp;gt;Int
-
-}
-
-
-
-报错： ‘optional’ ca">
-<meta property="og:updated_time" content="2016-04-16T05:14:46.000Z">
+如果直接这样写肯定会报错123456protocol WaterFallFlowLayoutDatasource&amp;#123;optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&amp;amp;gt;Int&amp;#125;
+报错： ‘op">
+<meta property="og:updated_time" content="2016-04-16T12:45:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于protocol的一些问题及解决办法">
 <meta name="twitter:description" content="使用代理模式的时候需要用到protocol，有的时候会用到optional可选方法
-如果直接这样写肯定会报错
-
-
-protocol WaterFallFlowLayoutDatasource{
-
-optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&amp;gt;Int
-
-}
-
-
-
-报错： ‘optional’ ca">
+如果直接这样写肯定会报错123456protocol WaterFallFlowLayoutDatasource&amp;#123;optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&amp;amp;gt;Int&amp;#125;
+报错： ‘op">
   
     <link rel="alternate" href="/atom.xml" title="孤航" type="application/atom+xml">
   
@@ -97,7 +67,7 @@ optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&amp;gt;I
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ccjason.com"></form>
       </div>
     </div>
   </div>
@@ -130,17 +100,7 @@ optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&amp;gt;I
     <div class="article-entry" itemprop="articleBody">
       
         <p>使用代理模式的时候需要用到protocol，有的时候会用到optional可选方法</p>
-<p>如果直接这样写肯定会报错</p>
-<pre class="prettyprint">
-
-protocol WaterFallFlowLayoutDatasource{
-
-optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&gt;Int
-
-}
-
-</pre>
-
+<p>如果直接这样写肯定会报错<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(numberOfColumnInSection section:Int)</span></span>-&amp;gt;<span class="type">Int</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>报错： ‘optional’ can only be applied to members of an @objc protocol</p>
 <p>这里的解决方法是在protocol前面加上@objc关键字</p>
 <p>像这样</p>
@@ -148,58 +108,15 @@ optional func waterFallFlowLayout(numberOfColumnInSection section:Int)-&gt;Int
 @objc protocol WaterFallFlowLayoutDatasource
 </pre>
 
-<p>但是如果要使用自定义结构体作为返回值的时候就就会又出现新的问题：</p>
-<pre class="prettyprint">
-public struct EdgeSpace {
-
-public var vertical: CGFloat
-
-public var horizontal: CGFloat
-
-public init(vertical: CGFloat, horizontal: CGFloat){
-
-self.horizontal = horizontal
-
-self.vertical = vertical
-
-}
-
-}
-
-@objc protocol WaterFallFlowLayoutDatasource{
-
-optional func waterFallFlowLayout(insetForSectionOfIndex section:Int)-&gt;EdgeSpace
-
-}
-</pre>
-
+<p>但是如果要使用自定义结构体作为返回值的时候就就会又出现新的问题：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">EdgeSpace</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">var</span> vertical: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">var</span> horizontal: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">init</span>(vertical: <span class="type">CGFloat</span>, horizontal: <span class="type">CGFloat</span>)&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.horizontal = horizontal</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.vertical = vertical</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>会报错：Method cannot be a member of an @objc protocol because its result type cannot be represented in Objective-C</p>
-<p>这里可以这样来解决</p>
-<p><pre class="prettyprint"><br>public struct EdgeSpace {</pre></p>
-<p>public var vertical: CGFloat</p>
-<p>public var horizontal: CGFloat</p>
-<p>public init(vertical: CGFloat, horizontal: CGFloat){</p>
-<p>self.horizontal = horizontal</p>
-<p>self.vertical = vertical</p>
-<p>}</p>
-<p>}</p>
-<p>protocol WaterFallFlowLayoutDatasource{</p>
-<p>//这里是必须实现的方法</p>
-<p>func waterFallFlowLayout(viewAtIndexPath indexPath:NSIndexPath)-&gt;UIView</p>
-<p>&nbsp;</p>
-<p>//    这里是可选方法</p>
-<p>func waterFallFlowLayout(insetForSectionOfIndex section:Int)-&gt;EdgeSpace</p>
-<p>}</p>
-<p>//在这里实现一下可选方法的默认值</p>
-<p>extension WaterFallFlowLayoutDatasource{</p>
-<p>&nbsp;</p>
-<p>func waterFallFlowLayout(insetForSectionOfIndex section:Int)-&gt;EdgeSpace{return EdgeSpace(vertical: 5, horizontal: 5)}</p>
-<p>}<br><br>这样就解决问题了</p>
+<p>这里可以这样来解决<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">EdgeSpace</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">var</span> vertical: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">var</span> horizontal: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">init</span>(vertical: <span class="type">CGFloat</span>, horizontal: <span class="type">CGFloat</span>)&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.horizontal = horizontal</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.vertical = vertical</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这里是必须实现的方法</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(viewAtIndexPath indexPath:NSIndexPath)</span></span>-&amp;gt;<span class="type">UIView</span></span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    这里是可选方法</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在这里实现一下可选方法的默认值</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span>&#123;<span class="keyword">return</span> <span class="type">EdgeSpace</span>(vertical: <span class="number">5</span>, horizontal: <span class="number">5</span>)&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样就解决问题了</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/09/关于protocol的一些问题及解决办法/" data-id="cin334u82000eu180oigyzzrz" class="article-share-link">Share</a>
+      <a data-url="http://ccjason.com/2016/03/09/关于protocol的一些问题及解决办法/" data-id="cin34exe1000eww80xjk4kppp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -265,7 +182,7 @@ optional func waterFallFlowLayout(insetForSectionOfIndex section:Int)-&gt;EdgeSp
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li></ul>
     </div>
   </div>
 

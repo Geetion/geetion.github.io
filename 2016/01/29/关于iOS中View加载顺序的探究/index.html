@@ -6,36 +6,18 @@
   <title>关于iOS中View加载顺序的探究 | 孤航</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="先上探究过程源代码：
-ViewController1：
-class ViewController: UIViewController {
-&amp;nbsp;
-override func loadView() {
-super.loadView()
-let bt = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
-bt.set">
+ViewController1：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于iOS中View加载顺序的探究">
-<meta property="og:url" content="http://yoursite.com/2016/01/29/关于iOS中View加载顺序的探究/index.html">
+<meta property="og:url" content="http://ccjason.com/2016/01/29/关于iOS中View加载顺序的探究/index.html">
 <meta property="og:site_name" content="孤航">
 <meta property="og:description" content="先上探究过程源代码：
-ViewController1：
-class ViewController: UIViewController {
-&amp;nbsp;
-override func loadView() {
-super.loadView()
-let bt = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
-bt.set">
-<meta property="og:updated_time" content="2016-04-16T05:14:46.000Z">
+ViewController1：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091">
+<meta property="og:updated_time" content="2016-04-16T12:50:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于iOS中View加载顺序的探究">
 <meta name="twitter:description" content="先上探究过程源代码：
-ViewController1：
-class ViewController: UIViewController {
-&amp;nbsp;
-override func loadView() {
-super.loadView()
-let bt = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
-bt.set">
+ViewController1：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091">
   
     <link rel="alternate" href="/atom.xml" title="孤航" type="application/atom+xml">
   
@@ -82,7 +64,7 @@ bt.set">
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ccjason.com"></form>
       </div>
     </div>
   </div>
@@ -115,83 +97,8 @@ bt.set">
     <div class="article-entry" itemprop="articleBody">
       
         <p>先上探究过程源代码：</p>
-<p>ViewController1：</p>
-<p><pre class="prettyprint"><br>class ViewController: UIViewController {</pre></p>
-<p>&nbsp;</p>
-<p>override func loadView() {</p>
-<p>super.loadView()</p>
-<p>let bt = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100))</p>
-<p>bt.setTitle(“to2”, forState: UIControlState.Normal)</p>
-<p>bt.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)</p>
-<p>bt.addTarget(self, action: “bt”, forControlEvents: UIControlEvents.TouchUpInside)</p>
-<p>self.view.addSubview(bt)</p>
-<p>print(“load1”)</p>
-<p>}</p>
-<p>override func viewDidLoad() {</p>
-<p>super.viewDidLoad()</p>
-<p>print(“didload1”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewWillAppear(animated: Bool) {</p>
-<p>print(“willappear1”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewDidAppear(animated: Bool) {</p>
-<p>print(“didappear1”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewWillDisappear(animated: Bool) {</p>
-<p>print(“willdisappear1”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewDidDisappear(animated: Bool) {</p>
-<p>print(“diddisappear1”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>func bt(){</p>
-<p>let vc = ViewController2()</p>
-<p>self.presentViewController(vc, animated: true, completion: nil)</p>
-<p>}</p>
-<p>}</p>
-<p>&nbsp;<br><br>ViewController2：</p>
-<p><pre class="prettyprint"><br>class ViewController2: UIViewController {</pre></p>
-<p>override func loadView() {</p>
-<p>super.loadView()</p>
-<p>let bt = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100))</p>
-<p>bt.setTitle(“to1”, forState: UIControlState.Normal)</p>
-<p>bt.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)</p>
-<p>bt.addTarget(self, action: “bt”, forControlEvents: UIControlEvents.TouchUpInside)</p>
-<p>self.view.addSubview(bt)</p>
-<p>self.view.backgroundColor = UIColor.whiteColor()</p>
-<p>print(“load2”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewDidLoad() {</p>
-<p>super.viewDidLoad()</p>
-<p>print(“didload2”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewWillAppear(animated: Bool) {</p>
-<p>print(“willappear2”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewDidAppear(animated: Bool) {</p>
-<p>print(“didappear2”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewWillDisappear(animated: Bool) {</p>
-<p>print(“willdisappear2”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>override func viewDidDisappear(animated: Bool) {</p>
-<p>print(“diddisappear2”)</p>
-<p>}</p>
-<p>&nbsp;</p>
-<p>func bt(){</p>
-<p>let vc = ViewController2()</p>
-<p>self.dismissViewControllerAnimated(true, completion: nil)</p>
-<p>}</p>
-<p>}<br><br>加载好View以后输出显示：</p>
+<p>ViewController1：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">loadView</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">super</span>.loadView()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bt = <span class="type">UIButton</span>(frame: <span class="type">CGRect</span>(x: <span class="number">100</span>, y: <span class="number">100</span>, width: <span class="number">100</span>, height: <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">bt.setTitle(<span class="string">"to2"</span>, forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</span><br><span class="line"></span><br><span class="line">bt.setTitleColor(<span class="type">UIColor</span>.blackColor(), forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</span><br><span class="line"></span><br><span class="line">bt.addTarget(<span class="keyword">self</span>, action: <span class="string">"bt"</span>, forControlEvents: <span class="type">UIControlEvents</span>.<span class="type">TouchUpInside</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.view.addSubview(bt)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"load1"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">super</span>.viewDidLoad()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"didload1"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"willappear1"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"didappear1"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillDisappear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"willdisappear1"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidDisappear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"diddisappear1"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">bt</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> vc = <span class="type">ViewController2</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.presentViewController(vc, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line"><span class="type">ViewController2</span>：</span><br><span class="line">&lt;pre <span class="class"><span class="keyword">class</span>="<span class="title">prettyprint</span>"&gt;</span><br><span class="line"><span class="title">class</span> <span class="title">ViewController2</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">loadView</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">super</span>.loadView()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bt = <span class="type">UIButton</span>(frame: <span class="type">CGRect</span>(x: <span class="number">100</span>, y: <span class="number">100</span>, width: <span class="number">100</span>, height: <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">bt.setTitle(<span class="string">"to1"</span>, forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</span><br><span class="line"></span><br><span class="line">bt.setTitleColor(<span class="type">UIColor</span>.blackColor(), forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</span><br><span class="line"></span><br><span class="line">bt.addTarget(<span class="keyword">self</span>, action: <span class="string">"bt"</span>, forControlEvents: <span class="type">UIControlEvents</span>.<span class="type">TouchUpInside</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.view.addSubview(bt)</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.view.backgroundColor = <span class="type">UIColor</span>.whiteColor()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"load2"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">super</span>.viewDidLoad()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"didload2"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"willappear2"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"didappear2"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillDisappear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"willdisappear2"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidDisappear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"diddisappear2"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">bt</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> vc = <span class="type">ViewController2</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">self</span>.dismissViewControllerAnimated(<span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>加载好View以后输出显示：</p>
 <p><strong>load1</strong></p>
 <p><strong>didload1</strong></p>
 <p><strong>willappear1</strong></p>
@@ -214,7 +121,7 @@ bt.set">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/29/关于iOS中View加载顺序的探究/" data-id="cin334u7x000du180vqiatfjt" class="article-share-link">Share</a>
+      <a data-url="http://ccjason.com/2016/01/29/关于iOS中View加载顺序的探究/" data-id="cin34exe6000gww80tpar3sf0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Viewdidload/">Viewdidload</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/顺序/">顺序</a></li></ul>
@@ -282,7 +189,7 @@ bt.set">
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li></ul>
     </div>
   </div>
 
