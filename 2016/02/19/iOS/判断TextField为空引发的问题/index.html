@@ -5,46 +5,16 @@
   
   <title>判断TextField为空引发的问题 | 孤航</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法
-    NSString *title = [_titleTextField text];
-    if (title == nil){
-
-    printf(&amp;quot;222&amp;quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if (title == @&amp;quot;&amp;">
+  <meta name="description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法1234567891011121314151617181920212223    NSString *title = [_titleTextField text];        if (title == nil)&amp;#123;        printf(&amp;quot;222&amp;quot;);    &amp;#125;    NSString *tit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="判断TextField为空引发的问题">
 <meta property="og:url" content="http://ccjason.com/2016/02/19/iOS/判断TextField为空引发的问题/index.html">
 <meta property="og:site_name" content="孤航">
-<meta property="og:description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法
-    NSString *title = [_titleTextField text];
-    if (title == nil){
-
-    printf(&amp;quot;222&amp;quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if (title == @&amp;quot;&amp;">
-<meta property="og:updated_time" content="2016-04-16T05:14:46.000Z">
+<meta property="og:description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法1234567891011121314151617181920212223    NSString *title = [_titleTextField text];        if (title == nil)&amp;#123;        printf(&amp;quot;222&amp;quot;);    &amp;#125;    NSString *tit">
+<meta property="og:updated_time" content="2016-04-17T13:15:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="判断TextField为空引发的问题">
-<meta name="twitter:description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法
-    NSString *title = [_titleTextField text];
-    if (title == nil){
-
-    printf(&amp;quot;222&amp;quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if (title == @&amp;quot;&amp;">
+<meta name="twitter:description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法1234567891011121314151617181920212223    NSString *title = [_titleTextField text];        if (title == nil)&amp;#123;        printf(&amp;quot;222&amp;quot;);    &amp;#125;    NSString *tit">
   
     <link rel="alternate" href="/atom.xml" title="孤航" type="application/atom+xml">
   
@@ -127,39 +97,18 @@ NSString *title = [_titleTextField text];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一开始的判断方法是这样的在按确定键时执行，尝试了3种方法</p>
-<p><pre class="prettyprint"><br>    NSString *title = [_titleTextField text];</pre></p>
-<pre><code>    if (title == nil){
-
-    printf(&quot;222&quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if (title == @&quot;&quot;){
-
-    printf(&quot;222&quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if ([title isEqualToString: @&quot;&quot;]){
-
-    printf(&quot;222&quot;);
-
-}
-</code></pre><p><br>但是在不输入任何东西的情况下按确定依然没有执行这段代码，只有最后一种成功显示，以下是官方对textfield的text属性的注释</p>
-<p><pre class="prettyprint"><br>@property(nullable, nonatomic,copy)   NSString               *text;                 // default is nil<br></pre><br>可以看出默认其实是为nil的首先要解决的是isEqualtoString于==的区别，而isEqualToString是isEqual的字符串扩展，所以就可以理解为isEqual于==的区别，具体参见<a href="http://blog.csdn.net/devday/article/details/7594669" target="_blank" rel="external">http://blog.csdn.net/devday/article/details/7594669</a></p>
+        <p>一开始的判断方法是这样的在按确定键时执行，尝试了3种方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    NSString *title = [_titleTextField text];</span><br><span class="line"></span><br><span class="line">        if (title == nil)&#123;</span><br><span class="line"></span><br><span class="line">        printf(&quot;222&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    NSString *title = [_titleTextField text];</span><br><span class="line"></span><br><span class="line">        if (title == @&quot;&quot;)&#123;</span><br><span class="line"></span><br><span class="line">        printf(&quot;222&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    NSString *title = [_titleTextField text];</span><br><span class="line"></span><br><span class="line">        if ([title isEqualToString: @&quot;&quot;])&#123;</span><br><span class="line"></span><br><span class="line">        printf(&quot;222&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是在不输入任何东西的情况下按确定依然没有执行这段代码，只有最后一种成功显示，以下是官方对textfield的text属性的注释</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property(nullable, nonatomic,copy)   NSString               *text;                 // default is nil</span><br></pre></td></tr></table></figure>
+<p>可以看出默认其实是为nil的首先要解决的是isEqualtoString于==的区别，而isEqualToString是isEqual的字符串扩展，所以就可以理解为isEqual于==的区别，具体参见<a href="http://blog.csdn.net/devday/article/details/7594669" target="_blank" rel="external">http://blog.csdn.net/devday/article/details/7594669</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/02/19/iOS/判断TextField为空引发的问题/" data-id="cin4gmjbl000lob80a767bxgf" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2016/02/19/iOS/判断TextField为空引发的问题/" data-id="cin4lj81p000o2ys6s67pt60i" class="article-share-link">分享</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TextField/">TextField</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nil/">nil</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/判断/">判断</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TextField/">TextField</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nil/">nil</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/判断/">判断</a></li></ul>
 
     </footer>
   </div>
@@ -225,7 +174,7 @@ NSString *title = [_titleTextField text];
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ARC/" style="font-size: 10px;">ARC</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/CoreData/" style="font-size: 10px;">CoreData</a> <a href="/tags/IOS/" style="font-size: 20px;">IOS</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/SqlLite/" style="font-size: 10px;">SqlLite</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TextField/" style="font-size: 10px;">TextField</a> <a href="/tags/Viewdidload/" style="font-size: 10px;">Viewdidload</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/nil/" style="font-size: 10px;">nil</a> <a href="/tags/protocol/" style="font-size: 10px;">protocol</a> <a href="/tags/swift/" style="font-size: 10px;">swift</a> <a href="/tags/userDefault/" style="font-size: 10px;">userDefault</a> <a href="/tags/传值/" style="font-size: 10px;">传值</a> <a href="/tags/判断/" style="font-size: 10px;">判断</a> <a href="/tags/协议/" style="font-size: 10px;">协议</a> <a href="/tags/反向传值/" style="font-size: 10px;">反向传值</a> <a href="/tags/可选方法/" style="font-size: 10px;">可选方法</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/广播机制/" style="font-size: 10px;">广播机制</a> <a href="/tags/数据持久化/" style="font-size: 10px;">数据持久化</a> <a href="/tags/本地数据存储/" style="font-size: 15px;">本地数据存储</a> <a href="/tags/跳转/" style="font-size: 10px;">跳转</a> <a href="/tags/重复点击/" style="font-size: 10px;">重复点击</a> <a href="/tags/顺序/" style="font-size: 10px;">顺序</a>
+      <a href="/tags/ARC/" style="font-size: 10px;">ARC</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/CoreData/" style="font-size: 10px;">CoreData</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/SqlLite/" style="font-size: 10px;">SqlLite</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TextField/" style="font-size: 10px;">TextField</a> <a href="/tags/Viewdidload/" style="font-size: 10px;">Viewdidload</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/nil/" style="font-size: 10px;">nil</a> <a href="/tags/protocol/" style="font-size: 10px;">protocol</a> <a href="/tags/swift/" style="font-size: 10px;">swift</a> <a href="/tags/userDefault/" style="font-size: 10px;">userDefault</a> <a href="/tags/传值/" style="font-size: 10px;">传值</a> <a href="/tags/判断/" style="font-size: 10px;">判断</a> <a href="/tags/协议/" style="font-size: 10px;">协议</a> <a href="/tags/反向传值/" style="font-size: 10px;">反向传值</a> <a href="/tags/可选方法/" style="font-size: 10px;">可选方法</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/广播机制/" style="font-size: 10px;">广播机制</a> <a href="/tags/数据持久化/" style="font-size: 10px;">数据持久化</a> <a href="/tags/本地数据存储/" style="font-size: 15px;">本地数据存储</a> <a href="/tags/跳转/" style="font-size: 10px;">跳转</a> <a href="/tags/重复点击/" style="font-size: 10px;">重复点击</a> <a href="/tags/顺序/" style="font-size: 10px;">顺序</a>
     </div>
   </div>
 
