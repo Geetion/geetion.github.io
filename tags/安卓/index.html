@@ -3,48 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>判断TextField为空引发的问题 | 孤航</title>
+  <title>Tag: 安卓 | 孤航</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法
-    NSString *title = [_titleTextField text];
-    if (title == nil){
-
-    printf(&amp;quot;222&amp;quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if (title == @&amp;quot;&amp;">
-<meta property="og:type" content="article">
-<meta property="og:title" content="判断TextField为空引发的问题">
-<meta property="og:url" content="http://ccjason.com/2016/02/19/判断TextField为空引发的问题/index.html">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="孤航">
+<meta property="og:url" content="http://ccjason.com/tags/安卓/index.html">
 <meta property="og:site_name" content="孤航">
-<meta property="og:description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法
-    NSString *title = [_titleTextField text];
-    if (title == nil){
-
-    printf(&amp;quot;222&amp;quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if (title == @&amp;quot;&amp;">
-<meta property="og:updated_time" content="2016-04-16T05:14:46.000Z">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="判断TextField为空引发的问题">
-<meta name="twitter:description" content="一开始的判断方法是这样的在按确定键时执行，尝试了3种方法
-    NSString *title = [_titleTextField text];
-    if (title == nil){
-
-    printf(&amp;quot;222&amp;quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if (title == @&amp;quot;&amp;">
+<meta name="twitter:title" content="孤航">
+<meta name="twitter:description">
   
     <link rel="alternate" href="/atom.xml" title="孤航" type="application/atom+xml">
   
@@ -97,91 +66,39 @@ NSString *title = [_titleTextField text];
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-判断TextField为空引发的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/19/判断TextField为空引发的问题/" class="article-date">
-  <time datetime="2016-02-19T09:01:54.000Z" itemprop="datePublished">2016-02-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      判断TextField为空引发的问题
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/04/17/数据持久化技术/" class="archive-article-date">
+  <time datetime="2016-04-17T03:21:17.000Z" itemprop="datePublished">4月 17</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/04/17/数据持久化技术/">数据持久化技术</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一开始的判断方法是这样的在按确定键时执行，尝试了3种方法</p>
-<p><pre class="prettyprint"><br>    NSString *title = [_titleTextField text];</pre></p>
-<pre><code>    if (title == nil){
-
-    printf(&quot;222&quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if (title == @&quot;&quot;){
-
-    printf(&quot;222&quot;);
-
-}
-
-NSString *title = [_titleTextField text];
-
-    if ([title isEqualToString: @&quot;&quot;]){
-
-    printf(&quot;222&quot;);
-
-}
-</code></pre><p><br>但是在不输入任何东西的情况下按确定依然没有执行这段代码，只有最后一种成功显示，以下是官方对textfield的text属性的注释</p>
-<p><pre class="prettyprint"><br>@property(nullable, nonatomic,copy)   NSString               *text;                 // default is nil<br></pre><br>可以看出默认其实是为nil的首先要解决的是isEqualtoString于==的区别，而isEqualToString是isEqual的字符串扩展，所以就可以理解为isEqual于==的区别，具体参见<a href="http://blog.csdn.net/devday/article/details/7594669" target="_blank" rel="external">http://blog.csdn.net/devday/article/details/7594669</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/02/19/判断TextField为空引发的问题/" data-id="cin40x223000l3u80kuewti57" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TextField/">TextField</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nil/">nil</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/判断/">判断</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/02/27/iOS本地数据存储之UserDefault/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          iOS本地数据存储之UserDefault
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/02/11/iOS熊孩子重复点击View问题的解决办法/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">iOS熊孩子重复点击View问题的解决办法</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
 </section>
         

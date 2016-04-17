@@ -68,6 +68,68 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Objective-C 一个神奇的语言" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/28/Objective-C 一个神奇的语言/" class="article-date">
+  <time datetime="2015-12-28T07:00:20.000Z" itemprop="datePublished">2015-12-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/28/Objective-C 一个神奇的语言/">Objective-C 一个神奇的语言</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>其实一开始自认为已经可以熟练地使用swift编写一些程序了，再入这个OC的坑应该不会太难，但是事实证明：I’m wrrong…..</p>
+<p>OC狠狠地把我调教了一顿，让我见识了什么是神一般的语言，我的第一感觉就是：尼玛，为什么要加星号啊，尼玛，为什么还有中括号，尼玛，为什么定义一个method还有加号和减号，为什么声明全局变量不能赋值。。。。请收下我的膝盖。。。。</p>
+<p>好吧，不得不承认swift真的太方便了，但是OC看起来比较美观，因为同一段接口的官方文档给不懂代码的人看，大家一致认为OC的文档比较整洁，好吧我又给跪了。</p>
+<p>前几天还看到有人在知乎上发帖问到底学OC好还是Swift好，其实自己一开始叶纠结过要学iOS开发应该学OC呢还是Swift呢，当然对于毛都不懂的一开始我来说，语法简介的Swift是有碾压型的优势的，不过现在反过头去看OC才发现其实OC虽然比较麻烦但是确实能学到很多东西，比如在Swift里面已经不用太多关注的Property等，还有OC的很多东西规范的很细致，比如implementation和interface，这两个东西在Swift里面已经合二为一了，再比如类方法和实例方法，好吧不得不说自己其实原来根本没有在意过这些东西，到了oc这真的学到了好多感觉用一辈子Swift都不一定懂的东西。</p>
+<p>接下来整理一下这个过程中遇到过的问题：</p>
+<p>1.为什么定义方法有加号和减号的区别：</p>
+<p><pre class="prettyprint"><br>-(NSString <em>)executeSomeThing;<br>+(NSString </em>)executeAnotherThing;<br></pre><br>+表示该方法是类方法，不需要实例化该类就可以调用。<br>-表示该方法是实例方法，必须要实例化后才能调用</p>
+<p>&nbsp;</p>
+<p>2.为什么要加星号，什么时候需要加星号：</p>
+<p>OC的星号和C是一样的都是指针，如果属性的数据类型是基本类型，如本例中的age属性，属性前不用加上星号（当然，加上也不错，加上的话就表示是一个指针形的变量），否则如果数据类型是对象型的就必须加上星号</p>
+<p>&nbsp;</p>
+<p>3.什么时候用中括号，什么时候用点：</p>
+<p>个人经过实验认为调用方法的时候要用中括号，调用属性的时候要用点。</p>
+<p>&nbsp;</p>
+<p>4.OC中属性的 定义：</p>
+<p>格式：@property （特性） 属性类型 属性名称</p>
+<p>assign：简单赋值，不更改索引计数</p>
+<p>copy：建立一个索引数为1的对象，然后释放旧对象</p>
+<p>retain：释放（release）旧对象，将旧对象的值赋予输入对象，再提高输入对象的索引计数为1</p>
+<p><strong>noatomatic： </strong>非原子性访问，不加同步，多线程并发访问会提高性能。注意，如果不加此属性，<br>则默认是两个访问方法都为原子型事务访问。</p>
+<p>strong:强引用（ARC）</p>
+<p>weak：弱引用（ARC）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ccjason.com/2015/12/28/Objective-C 一个神奇的语言/" data-id="cin40x21b00013u804uon837u" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Swift的页面跳转与传值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/20/Swift的页面跳转与传值/" class="article-date">
@@ -119,7 +181,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2015/12/20/Swift的页面跳转与传值/" data-id="cin3y0cz90001l480amkxl8l5" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2015/12/20/Swift的页面跳转与传值/" data-id="cin40x21i00043u80p7ib2u1l" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift/">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/传值/">传值</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反向传值/">反向传值</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/跳转/">跳转</a></li></ul>
@@ -154,7 +216,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IOS/">IOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextField/">TextField</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Viewdidload/">Viewdidload</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nil/">nil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/传值/">传值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/判断/">判断</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/反向传值/">反向传值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跳转/">跳转</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/顺序/">顺序</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IOS/">IOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SqlLite/">SqlLite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TextField/">TextField</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Viewdidload/">Viewdidload</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nil/">nil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/传值/">传值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/判断/">判断</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/反向传值/">反向传值</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓/">安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据持久化/">数据持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/跳转/">跳转</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/顺序/">顺序</a></li></ul>
     </div>
   </div>
 
@@ -164,7 +226,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/IOS/" style="font-size: 20px;">IOS</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TextField/" style="font-size: 10px;">TextField</a> <a href="/tags/Viewdidload/" style="font-size: 10px;">Viewdidload</a> <a href="/tags/nil/" style="font-size: 10px;">nil</a> <a href="/tags/传值/" style="font-size: 10px;">传值</a> <a href="/tags/判断/" style="font-size: 10px;">判断</a> <a href="/tags/反向传值/" style="font-size: 10px;">反向传值</a> <a href="/tags/跳转/" style="font-size: 10px;">跳转</a> <a href="/tags/顺序/" style="font-size: 10px;">顺序</a>
+      <a href="/tags/IOS/" style="font-size: 20px;">IOS</a> <a href="/tags/SqlLite/" style="font-size: 10px;">SqlLite</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TextField/" style="font-size: 10px;">TextField</a> <a href="/tags/Viewdidload/" style="font-size: 10px;">Viewdidload</a> <a href="/tags/nil/" style="font-size: 10px;">nil</a> <a href="/tags/传值/" style="font-size: 10px;">传值</a> <a href="/tags/判断/" style="font-size: 10px;">判断</a> <a href="/tags/反向传值/" style="font-size: 10px;">反向传值</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/数据持久化/" style="font-size: 10px;">数据持久化</a> <a href="/tags/跳转/" style="font-size: 10px;">跳转</a> <a href="/tags/顺序/" style="font-size: 10px;">顺序</a>
     </div>
   </div>
 
@@ -186,6 +248,10 @@
       <ul>
         
           <li>
+            <a href="/2016/04/17/数据持久化技术/">数据持久化技术</a>
+          </li>
+        
+          <li>
             <a href="/2016/04/16/BroadCast广播机制/">BroadCast广播机制</a>
           </li>
         
@@ -199,10 +265,6 @@
         
           <li>
             <a href="/2016/02/27/iOS本地数据存储之UserDefault/">iOS本地数据存储之UserDefault</a>
-          </li>
-        
-          <li>
-            <a href="/2016/02/19/判断TextField为空引发的问题/">判断TextField为空引发的问题</a>
           </li>
         
       </ul>
