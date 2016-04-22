@@ -72,6 +72,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS/判断TextField为空引发的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/19/iOS/判断TextField为空引发的问题/" class="article-date">
+  <time datetime="2016-02-19T09:01:54.000Z" itemprop="datePublished">2016-02-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/19/iOS/判断TextField为空引发的问题/">判断TextField为空引发的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一开始的判断方法是这样的在按确定键时执行，尝试了3种方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    NSString *title = [_titleTextField text];</span><br><span class="line"></span><br><span class="line">        if (title == nil)&#123;</span><br><span class="line"></span><br><span class="line">        printf(&quot;222&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    NSString *title = [_titleTextField text];</span><br><span class="line"></span><br><span class="line">        if (title == @&quot;&quot;)&#123;</span><br><span class="line"></span><br><span class="line">        printf(&quot;222&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    NSString *title = [_titleTextField text];</span><br><span class="line"></span><br><span class="line">        if ([title isEqualToString: @&quot;&quot;])&#123;</span><br><span class="line"></span><br><span class="line">        printf(&quot;222&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是在不输入任何东西的情况下按确定依然没有执行这段代码，只有最后一种成功显示，以下是官方对textfield的text属性的注释</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property(nullable, nonatomic,copy)   NSString               *text;                 // default is nil</span><br></pre></td></tr></table></figure>
+<p>可以看出默认其实是为nil的首先要解决的是isEqualtoString于==的区别，而isEqualToString是isEqual的字符串扩展，所以就可以理解为isEqual于==的区别，具体参见<a href="http://blog.csdn.net/devday/article/details/7594669" target="_blank" rel="external">http://blog.csdn.net/devday/article/details/7594669</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ccjason.com/2016/02/19/iOS/判断TextField为空引发的问题/" data-id="cinbvkw7x002crps66h34o4l8" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TextField/">TextField</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nil/">nil</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/判断/">判断</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-iOS/iOS熊孩子重复点击View问题的解决办法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/02/11/iOS/iOS熊孩子重复点击View问题的解决办法/" class="article-date">
@@ -105,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/02/11/iOS/iOS熊孩子重复点击View问题的解决办法/" data-id="cin4lj81l000h2ys6e7iie9p0" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2016/02/11/iOS/iOS熊孩子重复点击View问题的解决办法/" data-id="cinbvkw73000irps614lrwl3n" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/重复点击/">重复点击</a></li></ul>
@@ -169,7 +216,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/01/29/iOS/关于iOS中View加载顺序的探究/" data-id="cin4lj81r000r2ys6yzzkwo88" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2016/01/29/iOS/关于iOS中View加载顺序的探究/" data-id="cinbvkw7b000orps6l17tdnuu" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Viewdidload/">Viewdidload</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/顺序/">顺序</a></li></ul>
@@ -182,67 +229,10 @@
 
 
   
-    <article id="post-工欲善其事必先利其器,亮剑Sublime" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/01/16/工欲善其事必先利其器,亮剑Sublime/" class="article-date">
-  <time datetime="2016-01-16T01:01:37.000Z" itemprop="datePublished">2016-01-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术向/">技术向</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/16/工欲善其事必先利其器,亮剑Sublime/">工欲善其事必先利其器,亮剑Sublime</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>关于比较新的Atom和老牌的Sublime，一开是我其实挺喜欢Atom的，主要是因为界面，atom一脸的小清新，sublime一脸的土气，但是作为程序员当然不能只是看脸了，毕竟剑锋不锋利还得看刃而不是剑鞘，所以我百度整理了atom对于老牌sublime的优缺点：</p>
-<ul>
-<li>类似css语法的快捷键绑定，可编程性更高；门槛低；</li>
-<li>基于chrome，每个窗口都是web页，比起emacs更加容易定制界面，如果说emacs像操作系统，那么atom简直就是更现代的云操作系统，web页面能实现的形式，atom都可以。相比，sublime更专注编辑，很难通过自定义扩展搞这么花哨；</li>
-<li>整合nodejs，可以基于github上无数的package肩膀上，继续二次开发，资源多，成本小；</li>
-<li>Tree视图等Atom更符合21世纪人的习惯</li>
-<li>源码集成上，在 Atom更改了代码如果没有提交，会在树视图上有颜色显示，作为源码版本控制github出品的Atom自然在这方面要强些，但是Sublime使用附加包就更强大了</li>
-<li>在性能上，Atom使用C++, Node.js, CoffeeScript构建，每个页面都是从本地HTML渲染，性能要差。<br>来源：知乎等网站</li>
-</ul>
-<p>总的来说atom就是界面好看，但是运行方面比sublime还是差一点，所以还是果断选择sublime</p>
-<p>选择好了代码编辑器，那么插件当然必不可少了，要想快速撸代码全副武装sublime吧：</p>
-<p>用package control 可以很方便的管理插件，而且安装简便，你只需要在sublime中按`ctrl+`` 调出console，然后前往<a href="https://packagecontrol.io/installation" target="_blank" rel="external">package control 官网</a>根据你的sublime版本复制右侧的一大堆代码到console中回车就安装好了。</p>
-<p>插件首先是各种代码补全：</p>
-<p>1.emmet：前身是大名鼎鼎的Zen coding，它使用仿CSS选择器的语法来生成代码，大大提高了HTML/CSS代码编写的速度</p>
-<p>2.sublimerepl ：这可能是对程序员最有用的插件。SublimeREPL 允许你在 Sublime Texxt 中运行各种语言（NodeJS ， Python，Ruby， Scala 和 Haskell 等等）</p>
-<p>&nbsp;</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/01/16/工欲善其事必先利其器,亮剑Sublime/" data-id="cin4lj80600012ys6lti0w3u6" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">__('next') &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -294,6 +284,10 @@
       <ul>
         
           <li>
+            <a href="/2016/04/22/123/">123</a>
+          </li>
+        
+          <li>
             <a href="/2016/04/17/Android/数据持久化技术/">数据持久化技术</a>
           </li>
         
@@ -307,10 +301,6 @@
         
           <li>
             <a href="/2016/03/09/iOS/关于protocol的一些问题及解决办法/">关于protocol的一些问题及解决办法</a>
-          </li>
-        
-          <li>
-            <a href="/2016/02/27/iOS/iOS本地数据存储之UserDefault/">iOS本地数据存储之UserDefault</a>
           </li>
         
       </ul>
