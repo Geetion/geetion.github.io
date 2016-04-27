@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>孤航</title>
+  <title>ARC计数原理探究 | 孤航</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孤航">
-<meta property="og:url" content="http://ccjason.com/index.html">
+  <meta name="description" content="为了方便探究使用，我们创建一个osx的terminal application然后会自动新建一个Swift文件，首先介绍一个概念，虽然大家平常都用过，但还是有人不明白其中的定义句柄：我们一般的实例化变量例如var a = someclass()其实可以分为两步：等号前半部分：创建一个变量句柄后半部分：生成实例，然后通过等号将实例与句柄联系在一起我们是不能直接操作对象的，想要操作对象只有通过句柄，这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARC计数原理探究">
+<meta property="og:url" content="http://ccjason.com/2016/04/27/ARC计数原理探究/index.html">
 <meta property="og:site_name" content="孤航">
-<meta property="og:description">
+<meta property="og:description" content="为了方便探究使用，我们创建一个osx的terminal application然后会自动新建一个Swift文件，首先介绍一个概念，虽然大家平常都用过，但还是有人不明白其中的定义句柄：我们一般的实例化变量例如var a = someclass()其实可以分为两步：等号前半部分：创建一个变量句柄后半部分：生成实例，然后通过等号将实例与句柄联系在一起我们是不能直接操作对象的，想要操作对象只有通过句柄，这">
+<meta property="og:updated_time" content="2016-04-27T04:26:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孤航">
-<meta name="twitter:description">
+<meta name="twitter:title" content="ARC计数原理探究">
+<meta name="twitter:description" content="为了方便探究使用，我们创建一个osx的terminal application然后会自动新建一个Swift文件，首先介绍一个概念，虽然大家平常都用过，但还是有人不明白其中的定义句柄：我们一般的实例化变量例如var a = someclass()其实可以分为两步：等号前半部分：创建一个变量句柄后半部分：生成实例，然后通过等号将实例与句柄联系在一起我们是不能直接操作对象的，想要操作对象只有通过句柄，这">
   
     <link rel="alternate" href="/atom.xml" title="孤航" type="application/atom+xml">
   
@@ -70,9 +71,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-ARC计数原理探究" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ARC计数原理探究" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/27/ARC计数原理探究/" class="article-date">
   <time datetime="2016-04-27T03:40:21.000Z" itemprop="datePublished">2016-04-27</time>
@@ -85,8 +84,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/27/ARC计数原理探究/">ARC计数原理探究</a>
+    <h1 class="article-title" itemprop="name">
+      ARC计数原理探究
     </h1>
   
 
@@ -117,90 +116,30 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-Andoid网络请求" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/23/Andoid网络请求/" class="article-date">
-  <time datetime="2016-04-23T03:03:24.000Z" itemprop="datePublished">2016-04-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/23/Andoid网络请求/">Andoid网络请求</a>
-    </h1>
+    <a href="/2016/04/23/Andoid网络请求/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Andoid网络请求</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/04/23/Andoid网络请求/" data-id="ciniczzf50001s0s6ajklm1wg" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
 
 
 
-  
-    <article id="post-123" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/22/123/" class="article-date">
-  <time datetime="2016-04-22T15:31:40.000Z" itemprop="datePublished">2016-04-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/22/123/">123</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/04/22/123/" data-id="ciniczzf70002s0s6lzxcgng4" class="article-share-link">分享</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
-  </nav>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>     
 </section>
         
           <aside id="sidebar">

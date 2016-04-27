@@ -72,6 +72,111 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Android/数据持久化技术" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/17/Android/数据持久化技术/" class="article-date">
+  <time datetime="2016-04-17T03:21:17.000Z" itemprop="datePublished">2016-04-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/17/Android/数据持久化技术/">数据持久化技术</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一般使用应用程序的时候产生的数据都会在程序关闭后销毁掉，如果有些文件或数据需要保存下来以后还要继续使用就需要用到数据持久化技术了，在android里提供了三种方式来进行数据持久化：<br>1.文件输入输出流：适合写入大型文件，下载<br>2.SqlLite数据库：适合写入大量有规划的数据<br>3.SharedPreference：适合存储变量信息，设置信息及零散内容</p>
+<h3 id="一-SharedPreferenc："><a href="#一-SharedPreferenc：" class="headerlink" title="一.SharedPreferenc："></a>一.SharedPreferenc：</h3><p>ps:同iOS中的UserDefault<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*    </span><br><span class="line">    获取SharedPreferences单例及其中的editor对象    </span><br><span class="line">	第一个参数传入要写入的文件名，第二个参数有两个可选项    	MODE_PRIVATE:表示只有当前应用程序可以读写这个文件</span><br><span class="line">	MODE_MULTI_PROCESS:一般用于多线程对文件进行操作</span><br><span class="line">*/</span></span><br><span class="line">SharedPreferences.Editor sharedPreferences = getSharedPreferences(<span class="string">"data"</span>,MODE_PRIVATE).edit();         </span><br><span class="line"><span class="comment">/* 使用键值对方法添加数据</span><br><span class="line">	第一个参数，数据名称</span><br><span class="line">	第二个参数，数据内容</span><br><span class="line">*/</span></span><br><span class="line">sharedPreferences.putString(<span class="string">"name1"</span>,<span class="string">"content"</span>);</span><br><span class="line">sharedPreferences.putInt(<span class="string">"name2"</span>,<span class="number">1</span>);</span><br><span class="line"><span class="comment">//提交数据</span></span><br><span class="line">sharedPreferences.commit()</span><br></pre></td></tr></table></figure></p>
+<p>提取数据一样简单<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//不需要获取edit对象了</span></span><br><span class="line">SharedPreferences sharedPreferences = getSharedPreferences(<span class="string">"data"</span>,MODE_PRIVATE);</span><br><span class="line"><span class="comment">//从sharedPreferences获取数据，传入第一个参数数据名，第二个参数是在找不到对应数据的时候返回的默认数据</span></span><br><span class="line">String name = sharedPreferences.getString(<span class="string">"name1"</span>,<span class="number">123</span><span class="string">");</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="二-文件输入输出流："><a href="#二-文件输入输出流：" class="headerlink" title="二.文件输入输出流："></a>二.文件输入输出流：</h3><p>ps：同IOS中的NSFileManager<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*生成文件输出流句柄传入两个参数，第一个参数文件名。第二个参数写入模式有两个可选项</span><br><span class="line">MODE_PRIVATE:在文件已存在时覆盖原文件内容</span><br><span class="line">MODE_APPEND：在文件存在时在文件后追加内容</span><br><span class="line">*/</span></span><br><span class="line">FileOutputStream out = openFileOutput(<span class="string">"data"</span>, Context.MODE_PRIVATE);</span><br><span class="line"><span class="comment">//初始化写入缓存句柄</span></span><br><span class="line">BufferedWriter writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> OutputStreamWriter(out));</span><br><span class="line"><span class="comment">//向文件写入数据</span></span><br><span class="line">writer.write(<span class="string">"12333"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>提取数据则要把输出流改成输入流<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">StringBuilder content = <span class="keyword">new</span> StringBuilder()</span><br><span class="line"><span class="comment">//生成文件输入流句柄传入一个参数文件名</span></span><br><span class="line">FileInputStream in = openFileInput(<span class="string">"data"</span>);</span><br><span class="line"><span class="comment">//初始化读取缓存句柄</span></span><br><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> OutputStreamReader(in));</span><br><span class="line"><span class="comment">//逐行写入数据</span></span><br><span class="line"><span class="keyword">while</span>(reader.readline())&#123;</span><br><span class="line">  content.append(reader.readline());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//讲content转化为字符串形式</span></span><br><span class="line">  content.toString();</span><br></pre></td></tr></table></figure></p>
+<h3 id="三-SqlLite数据库"><a href="#三-SqlLite数据库" class="headerlink" title="三.SqlLite数据库"></a>三.SqlLite数据库</h3><p>ps:同IOS中的Core Data<br>首先创建类继承SQLiteOpenHelper<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDatabaseHelper</span> <span class="keyword">extends</span> <span class="title">SQLiteOpenHelper</span> </span>&#123;</span><br><span class="line">    <span class="comment">//接收传入的上下文</span></span><br><span class="line">    Context mcontext;</span><br><span class="line">    <span class="comment">//SqlLite建表语句，学过操作sqllite的同学不会陌生</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String CREAT_BOOK = <span class="string">"create table book("</span> +</span><br><span class="line">            <span class="string">"id integer primary key autoincrement,"</span> +</span><br><span class="line">            <span class="string">"author text,"</span> +</span><br><span class="line">            <span class="string">"price real,"</span> +</span><br><span class="line">            <span class="string">"pages integer,"</span> +</span><br><span class="line">            <span class="string">"name text)"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyDatabaseHelper</span><span class="params">(Context context, String name, SQLiteDatabase.CursorFactory factory, <span class="keyword">int</span> version)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, name, factory, version);</span><br><span class="line">        mcontext = context;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//重写数据库onCreate方法，在数据库不存在，新建立的时候会执行这个方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(SQLiteDatabase sqLiteDatabase)</span> </span>&#123;</span><br><span class="line">      <span class="comment">//执行建表语句</span></span><br><span class="line">        sqLiteDatabase.execSQL(CREAT_BOOK);</span><br><span class="line">        Toast.makeText(mcontext,<span class="string">"123"</span>,Toast.LENGTH_LONG).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(SQLiteDatabase sqLiteDatabase, <span class="keyword">int</span> i, <span class="keyword">int</span> i1)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后在MainActivity中执行<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*初始化databasehelper,传入四个参数</span><br><span class="line">1.上下文</span><br><span class="line">2.数据库文件名</span><br><span class="line">3.允许我们传入自定义cuser,一般为null</span><br><span class="line"> */</span></span><br><span class="line">MyDatabaseHelper myDatabaseHelper = <span class="keyword">new</span> MyDatabaseHelper(<span class="keyword">this</span>,<span class="string">"bookstore.db"</span>,<span class="keyword">null</span>,<span class="number">1</span>);</span><br><span class="line"><span class="comment">/*这里databasehelper有两个重要的实例方法，二者均可以创建或打开一个现有数据库(如果数据库不存在则创建一个)，并返回一个可操作的数据库对象，当数据库不可写入时（磁盘空间已满）getWritableDatabase()方法会异常</span><br><span class="line">getWritableDatabase</span><br><span class="line">getReadableDatabase*/</span></span><br><span class="line">myDatabaseHelper.getWritableDatabase();</span><br></pre></td></tr></table></figure></p>
+<p>因为在创建好数据库以后databasehelper的onCreate方法不会在执行了那么想要更新数据库就要用到onUpgrade方法了，只需要在生成数据库对象的时候传入一个比原来数据库版本号大的数字即可<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyDatabaseHelper myDatabaseHelper = <span class="keyword">new</span> MyDatabaseHelper(<span class="keyword">this</span>,<span class="string">"bookstore.db"</span>,<span class="keyword">null</span>,<span class="number">1</span>);</span><br></pre></td></tr></table></figure></p>
+<p>当建好了数据库以后需要往里面录入数据库的时候直接操作数据库对象就可以了，然后是数据库的四大操作</p>
+<h5 id="1-增"><a href="#1-增" class="headerlink" title="1.增"></a>1.增</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MyDatabaseHelper myDatabaseHelper = <span class="keyword">new</span> MyDatabaseHelper(<span class="keyword">this</span>,<span class="string">"bookstore.db"</span>,<span class="keyword">null</span>,<span class="number">1</span>);</span><br><span class="line"><span class="comment">//创建句柄接收数据库对象</span></span><br><span class="line">SQLiteDatabase db = myDatabaseHelper.getWritableDatabase();</span><br><span class="line"><span class="comment">//创建一个contentvalue来对要插入的数据进行组装</span></span><br><span class="line">ContentValues contentValues = <span class="keyword">new</span> ContentValues();</span><br><span class="line"><span class="comment">//以键值对行形式插入数据，参数1：要插入的数据名称，参数2：数据内容</span></span><br><span class="line">contentValues.put(<span class="string">"name"</span>,<span class="string">"asd"</span>);</span><br><span class="line">contentValues.put(<span class="string">"pages"</span>,<span class="number">123</span>);</span><br><span class="line">contentValues.put(<span class="string">"price"</span>,<span class="number">27.41</span>);</span><br><span class="line">contentValues.put(<span class="string">"author"</span>,<span class="string">"asdd"</span>);</span><br><span class="line"><span class="comment">//将数据添加到数据库，参数1:表名，参数2：</span></span><br><span class="line">db.insert(<span class="string">"Book"</span>,<span class="keyword">null</span>,contentValues);</span><br></pre></td></tr></table></figure>
+<h5 id="2-改"><a href="#2-改" class="headerlink" title="2.改"></a>2.改</h5><p>需要修改数据库内数据只需要一句就够了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//参数3，要修改值的名字，参数4，要修改值的内容,组合起来其实就是sql语句中的约束条件</span></span><br><span class="line">contentValues.put(<span class="string">"price"</span>,<span class="number">27.41</span>);</span><br><span class="line">db.update(<span class="string">"Book"</span>,contentValues,<span class="string">"name = ?"</span>,<span class="keyword">new</span> String[]&#123;<span class="string">"asd"</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-删"><a href="#3-删" class="headerlink" title="3.删"></a>3.删</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//没什么好解释的就是比update少了一个参数</span></span><br><span class="line">db.delete(<span class="string">"Book"</span>,<span class="string">"pages &gt; ?"</span>,<span class="keyword">new</span> String[]&#123;<span class="string">"500"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="4-查"><a href="#4-查" class="headerlink" title="4.查"></a>4.查</h5><p>这个查询语句说来真是坑啊，这么多参数吓到我了(感觉真不如直接用sql语句)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*参数1:表名</span><br><span class="line">参数2：查询的列名</span><br><span class="line">参数3：约束条件(where)</span><br><span class="line">参数4：指定需要group by的列</span><br><span class="line">参数5：group by后的结果进行约束</span><br><span class="line">参数6：结果的排序方式（order by）</span><br><span class="line">*/</span></span><br><span class="line">db.query(<span class="string">"Book"</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure></p>
+<p>当然了如果你习惯了使用sql语句，官方也给我们提供了相应的方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.execSQL(<span class="string">"这里是各种乱七八糟的sql语句，包括增删改"</span>);</span><br><span class="line">db.rawQuery(<span class="string">"这里是sql查询语句"</span>);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ccjason.com/2016/04/17/Android/数据持久化技术/" data-id="ciniczzgd000cs0s677fwes2q" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SqlLite/">SqlLite</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据持久化/">数据持久化</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Android/BroadCast广播机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/16/Android/BroadCast广播机制/" class="article-date">
+  <time datetime="2016-04-16T04:09:36.000Z" itemprop="datePublished">2016-04-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术向/">技术向</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/16/Android/BroadCast广播机制/">BroadCast广播机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>为了方便系统级别的消息通知，安卓引入了一套广播消息机制。<br>广播主要分为两种：<br>1.标准广播：异步执行互不干涉<br>2.有序广播：进行完一个才能接着进行下一条广播</p>
+<p>接收广播方式：</p>
+<h5 id="1-动态注册监听飞行模式"><a href="#1-动态注册监听飞行模式" class="headerlink" title="1.动态注册监听飞行模式"></a>1.动态注册监听飞行模式</h5><p>在Activity里面注册<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化接收器</span></span><br><span class="line">AirplaneStateChangeRecevier airplaneStateChangeRecevier = <span class="keyword">new</span> AirplaneStateChangeRecevier();</span><br><span class="line"><span class="comment">//初始化意图筛选器传入要接受的广播类型</span></span><br><span class="line">IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter(<span class="string">"android.intent.action.AIRPLANE_MODE"</span>);</span><br><span class="line"><span class="comment">//注册接收器</span></span><br><span class="line"><span class="comment">//第一个参数：传入一个接收器用来接收广播</span></span><br><span class="line"><span class="comment">//第二个参数：传入意图筛选器</span></span><br><span class="line">registerReceiver(airplaneStateChangeRecevier,intentFilter)；</span><br></pre></td></tr></table></figure></p>
+<p>记得在Activity销毁的时候进行注销操作，不然会报错<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unregisterReceiver(airplaneStateChangeRecevier);</span><br></pre></td></tr></table></figure></p>
+<p>建立一个类继承于BroadcastReciever，当接收到广播时会执行OnRecevie方法，重写onRecevie方法实现功能<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AirplaneStateChangeRecevier</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">        Toast.makeText(MainActivity.<span class="keyword">this</span>,<span class="string">"7777"</span>,Toast.LENGTH_LONG);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="2-静态注册监听飞行模式"><a href="#2-静态注册监听飞行模式" class="headerlink" title="2.静态注册监听飞行模式"></a>2.静态注册监听飞行模式</h5><p>在AndroidManifest文件中写好意图筛选<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//这里填写接收器的类名</span><br><span class="line">        <span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">".AirplaneStateChangeRecevier"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">//需要接受的广播名，和动态生成很类似</span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.AIRPLANE_MODE"</span>&gt;</span><span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>当然你也可以自定义广播，只需要把action里面的接收广播名填写自定义名称即可，这样做当然不会再有广播发过来了，那么你只有自己在需要的时候发送这条广播,例如我把action里面的名字改成了heheBroadCAST,然后在我需要的时候我只需要生成一个意图然后发送广播就可以了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"heheBroadCAST"</span>);</span><br><span class="line">sendBroadcast(intent);</span><br></pre></td></tr></table></figure></p>
+<h5 id="三-其他"><a href="#三-其他" class="headerlink" title="三.其他"></a>三.其他</h5><p>想要发送有序广播和标准广播很类似，只需要把sendBroadCast改为<br>sendOrderedBroadcast();<br>这里会接收两个参数一个是参数接收器的句柄，另一个是权限相关字符，一般只需要传入Null就行<br>这样方式发送的标准广播不仅自己能接收到，如果别的程序也定义了相同的广播接收类型那么你发送的广播就会发送到别的应用程序，最关键的是你的应用程序有可能会接收到别的程序发来的消息，而很多消息可能是无用的，那么我们就需要使用本地通知了,也非常简单只需要获取到LocalBroadcastManager的单例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure></p>
+<p>然后使用LocalBroadcastManager发送注册通知即可,像这样<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">localBroadcastManager.sendBroadcast();</span><br><span class="line">localBroadcastManager.registerReceiver();</span><br><span class="line">localBroadcastManager.unregisterReceiver();</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ccjason.com/2016/04/16/Android/BroadCast广播机制/" data-id="ciniczzg40009s0s6g5m2ev21" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/广播机制/">广播机制</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-iOS/iOS本地数据存储之CoreData" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/01/iOS/iOS本地数据存储之CoreData/" class="article-date">
@@ -122,110 +227,10 @@ var array = try! context.executeFetchRequest(fetch)//执行获取数据操作，
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/04/01/iOS/iOS本地数据存储之CoreData/" data-id="cinbvkw6q0008rps6ijvyi4yp" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2016/04/01/iOS/iOS本地数据存储之CoreData/" data-id="ciniczzgf000fs0s6h9nwl44p" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CoreData/">CoreData</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/本地数据存储/">本地数据存储</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-iOS/关于protocol的一些问题及解决办法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/09/iOS/关于protocol的一些问题及解决办法/" class="article-date">
-  <time datetime="2016-03-09T10:17:36.000Z" itemprop="datePublished">2016-03-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/09/iOS/关于protocol的一些问题及解决办法/">关于protocol的一些问题及解决办法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>使用代理模式的时候需要用到protocol，有的时候会用到optional可选方法</p>
-<p>如果直接这样写肯定会报错<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(numberOfColumnInSection section:Int)</span></span>-》<span class="type">Int</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>报错： ‘optional’ can only be applied to members of an @objc protocol</p>
-<p>这里的解决方法是在protocol前面加上@objc关键字</p>
-<p>像这样<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span></span><br></pre></td></tr></table></figure></p>
-<p>但是如果要使用自定义结构体作为返回值的时候就就会又出现新的问题：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">EdgeSpace</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">var</span> vertical: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">var</span> horizontal: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">init</span>(vertical: <span class="type">CGFloat</span>, horizontal: <span class="type">CGFloat</span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.horizontal = horizontal</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.vertical = vertical</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>会报错：Method cannot be a member of an @objc protocol because its result type cannot be represented in Objective-C</p>
-<p>这里可以这样来解决<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">EdgeSpace</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">var</span> vertical: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">var</span> horizontal: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">init</span>(vertical: <span class="type">CGFloat</span>, horizontal: <span class="type">CGFloat</span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.horizontal = horizontal</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.vertical = vertical</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//这里是必须实现的方法</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(viewAtIndexPath indexPath:NSIndexPath)</span></span>-&amp;gt;<span class="type">UIView</span></span><br><span class="line"></span><br><span class="line">  &amp;nbsp;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//    这里是可选方法</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在这里实现一下可选方法的默认值</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  &amp;nbsp;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span>&#123;<span class="keyword">return</span> <span class="type">EdgeSpace</span>(vertical: <span class="number">5</span>, horizontal: <span class="number">5</span>)&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样就解决问题了</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/03/09/iOS/关于protocol的一些问题及解决办法/" data-id="cinbvkw6z000erps6bmf5677p" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protocol/">protocol</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/协议/">协议</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/可选方法/">可选方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-iOS/iOS本地数据存储之UserDefault" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/27/iOS/iOS本地数据存储之UserDefault/" class="article-date">
-  <time datetime="2016-02-27T09:24:36.000Z" itemprop="datePublished">2016-02-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/27/iOS/iOS本地数据存储之UserDefault/">iOS本地数据存储之UserDefault</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>首先是最简单的userDefault：</p>
-<p>这个的存取都非常方便，只要先初始化一个userDefault<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> userdefault = <span class="type">NSUserDefaults</span>.standardUserDefaults()</span><br></pre></td></tr></table></figure></p>
-<p>存储一个数据<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdefault.setObject(yourData, forKey: “dataKey”)</span><br></pre></td></tr></table></figure></p>
-<p>可以根据情况使用setbool,setfloat等等，读取数据<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = userdefault.objectForKey(“dataKey”)</span><br></pre></td></tr></table></figure></p>
-<p>就这么简单，但是userDefault能存储的只有一般形式的东西，比如bool，string等等，如果需要自定义一个object就需要写遵守NScoding方法了，存储这些东西的过程就像打包一个包裹然后扔进仓库，拿出来的时候要先解包才能使用，举个栗子<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsItem</span>:<span class="title">NSObject</span>,<span class="title">NSCoding</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//自定义objetc里面的各种数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> title = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> author = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> url = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="keyword">init</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">//解包数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">required</span> <span class="keyword">init</span>?(coder aDecoder: <span class="type">NSCoder</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过键值对的形式取出数据</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.title = aDecoder.decodeObjectForKey(<span class="string">"title"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.author = aDecoder.decodeObjectForKey(<span class="string">"author"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.url = aDecoder.decodeObjectForKey(<span class="string">"url"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">//打包数据</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">encodeWithCoder</span><span class="params">(aCoder: NSCoder)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过键值对的形式存入数据</span></span><br><span class="line"></span><br><span class="line">    aCoder.encodeObject(title, forKey: <span class="string">"title"</span>)</span><br><span class="line"></span><br><span class="line">    aCoder.encodeObject(author, forKey: <span class="string">"author"</span>)</span><br><span class="line"></span><br><span class="line">    aCoder.encodeObject(url, forKey: <span class="string">"url"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/02/27/iOS/iOS本地数据存储之UserDefault/" data-id="cinbvkw72000grps6azm3p9ll" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift/">swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/userDefault/">userDefault</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/本地数据存储/">本地数据存储</a></li></ul>
 
     </footer>
   </div>
@@ -290,6 +295,14 @@ var array = try! context.executeFetchRequest(fetch)//执行获取数据操作，
       <ul>
         
           <li>
+            <a href="/2016/04/27/ARC计数原理探究/">ARC计数原理探究</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/23/Andoid网络请求/">Andoid网络请求</a>
+          </li>
+        
+          <li>
             <a href="/2016/04/22/123/">123</a>
           </li>
         
@@ -299,14 +312,6 @@ var array = try! context.executeFetchRequest(fetch)//执行获取数据操作，
         
           <li>
             <a href="/2016/04/16/Android/BroadCast广播机制/">BroadCast广播机制</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/01/iOS/iOS本地数据存储之CoreData/">iOS本地数据存储之CoreData</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/09/iOS/关于protocol的一些问题及解决办法/">关于protocol的一些问题及解决办法</a>
           </li>
         
       </ul>

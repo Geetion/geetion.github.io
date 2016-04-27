@@ -72,6 +72,106 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS/关于protocol的一些问题及解决办法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/09/iOS/关于protocol的一些问题及解决办法/" class="article-date">
+  <time datetime="2016-03-09T10:17:36.000Z" itemprop="datePublished">2016-03-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/09/iOS/关于protocol的一些问题及解决办法/">关于protocol的一些问题及解决办法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用代理模式的时候需要用到protocol，有的时候会用到optional可选方法</p>
+<p>如果直接这样写肯定会报错<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(numberOfColumnInSection section:Int)</span></span>-》<span class="type">Int</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>报错： ‘optional’ can only be applied to members of an @objc protocol</p>
+<p>这里的解决方法是在protocol前面加上@objc关键字</p>
+<p>像这样<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span></span><br></pre></td></tr></table></figure></p>
+<p>但是如果要使用自定义结构体作为返回值的时候就就会又出现新的问题：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">EdgeSpace</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">var</span> vertical: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">var</span> horizontal: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">init</span>(vertical: <span class="type">CGFloat</span>, horizontal: <span class="type">CGFloat</span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.horizontal = horizontal</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.vertical = vertical</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>会报错：Method cannot be a member of an @objc protocol because its result type cannot be represented in Objective-C</p>
+<p>这里可以这样来解决<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">EdgeSpace</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">var</span> vertical: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">var</span> horizontal: <span class="type">CGFloat</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">init</span>(vertical: <span class="type">CGFloat</span>, horizontal: <span class="type">CGFloat</span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.horizontal = horizontal</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.vertical = vertical</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//这里是必须实现的方法</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(viewAtIndexPath indexPath:NSIndexPath)</span></span>-&amp;gt;<span class="type">UIView</span></span><br><span class="line"></span><br><span class="line">  &amp;nbsp;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//    这里是可选方法</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在这里实现一下可选方法的默认值</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">WaterFallFlowLayoutDatasource</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  &amp;nbsp;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">waterFallFlowLayout</span><span class="params">(insetForSectionOfIndex section:Int)</span></span>-&amp;gt;<span class="type">EdgeSpace</span>&#123;<span class="keyword">return</span> <span class="type">EdgeSpace</span>(vertical: <span class="number">5</span>, horizontal: <span class="number">5</span>)&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样就解决问题了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ccjason.com/2016/03/09/iOS/关于protocol的一些问题及解决办法/" data-id="ciniczzgk000ks0s6ss1finm3" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protocol/">protocol</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/协议/">协议</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/可选方法/">可选方法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-iOS/iOS本地数据存储之UserDefault" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/27/iOS/iOS本地数据存储之UserDefault/" class="article-date">
+  <time datetime="2016-02-27T09:24:36.000Z" itemprop="datePublished">2016-02-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/27/iOS/iOS本地数据存储之UserDefault/">iOS本地数据存储之UserDefault</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先是最简单的userDefault：</p>
+<p>这个的存取都非常方便，只要先初始化一个userDefault<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> userdefault = <span class="type">NSUserDefaults</span>.standardUserDefaults()</span><br></pre></td></tr></table></figure></p>
+<p>存储一个数据<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdefault.setObject(yourData, forKey: “dataKey”)</span><br></pre></td></tr></table></figure></p>
+<p>可以根据情况使用setbool,setfloat等等，读取数据<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = userdefault.objectForKey(“dataKey”)</span><br></pre></td></tr></table></figure></p>
+<p>就这么简单，但是userDefault能存储的只有一般形式的东西，比如bool，string等等，如果需要自定义一个object就需要写遵守NScoding方法了，存储这些东西的过程就像打包一个包裹然后扔进仓库，拿出来的时候要先解包才能使用，举个栗子<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsItem</span>:<span class="title">NSObject</span>,<span class="title">NSCoding</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//自定义objetc里面的各种数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> title = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> author = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> url = <span class="type">String</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="keyword">init</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">//解包数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">required</span> <span class="keyword">init</span>?(coder aDecoder: <span class="type">NSCoder</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过键值对的形式取出数据</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.title = aDecoder.decodeObjectForKey(<span class="string">"title"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.author = aDecoder.decodeObjectForKey(<span class="string">"author"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.url = aDecoder.decodeObjectForKey(<span class="string">"url"</span>) <span class="keyword">as</span>! <span class="type">String</span></span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">//打包数据</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">encodeWithCoder</span><span class="params">(aCoder: NSCoder)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过键值对的形式存入数据</span></span><br><span class="line"></span><br><span class="line">    aCoder.encodeObject(title, forKey: <span class="string">"title"</span>)</span><br><span class="line"></span><br><span class="line">    aCoder.encodeObject(author, forKey: <span class="string">"author"</span>)</span><br><span class="line"></span><br><span class="line">    aCoder.encodeObject(url, forKey: <span class="string">"url"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ccjason.com/2016/02/27/iOS/iOS本地数据存储之UserDefault/" data-id="ciniczzgg000hs0s6k9uhh2om" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift/">swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/userDefault/">userDefault</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/本地数据存储/">本地数据存储</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-iOS/判断TextField为空引发的问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/02/19/iOS/判断TextField为空引发的问题/" class="article-date">
@@ -106,120 +206,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/02/19/iOS/判断TextField为空引发的问题/" data-id="cinbvkw7x002crps66h34o4l8" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2016/02/19/iOS/判断TextField为空引发的问题/" data-id="ciniczzhf002cs0s6m2mutkx6" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TextField/">TextField</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nil/">nil</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/判断/">判断</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-iOS/iOS熊孩子重复点击View问题的解决办法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/02/11/iOS/iOS熊孩子重复点击View问题的解决办法/" class="article-date">
-  <time datetime="2016-02-11T13:36:19.000Z" itemprop="datePublished">2016-02-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/11/iOS/iOS熊孩子重复点击View问题的解决办法/">iOS熊孩子重复点击View问题的解决办法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>虽然一般来说这种状况比较少见但是还是要防某些熊孩子重复点击引起的各种各样的问题，百度了很多，没有找到太好的解决办法，自己想了一个办法，亲测可用，直接上代码<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Delay</span>:<span class="title">NSObject</span></span>&#123;</span><br><span class="line">  <span class="comment">//声明一个bool值变量标示点击状态</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">var</span> showStatus = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line"></span><br><span class="line">  参数taget:传入上下文以便于执行selector</span><br><span class="line"></span><br><span class="line">  参数ti：传入间隔时长</span><br><span class="line"></span><br><span class="line">  参数selector：传入一个需要执行的selector</span><br><span class="line"></span><br><span class="line">  */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">delaySelectorWithTimeInterva</span><span class="params">(target aTarget: AnyObject,ti: NSTimeInterval,selector aSelector: Selector)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断执行状态如果可以执行则运行代码</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> showStatus&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//执行传入的selector</span></span><br><span class="line"></span><br><span class="line">      aTarget.performSelector(aSelector)</span><br><span class="line"></span><br><span class="line">      <span class="comment">//将执行状态设置为false</span></span><br><span class="line"></span><br><span class="line">      showStatus = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">//延迟一段时间后执行changShowStatus方法将执行状态设置为true</span>      <span class="type">NSTimer</span>.scheduledTimerWithTimeInterval(ti, target: <span class="keyword">self</span>, selector: <span class="string">"changeShowStatus"</span>, userInfo: <span class="literal">nil</span>, repeats: <span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">changeShowStatus</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将执行状态设置为true</span></span><br><span class="line"></span><br><span class="line">    showStatus = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后调用的时候直接用<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Delay</span>.delaySelectorWithTimeInterva(target: <span class="keyword">self</span>,ti: <span class="number">2</span>, selector: <span class="string">"show"</span>)</span><br></pre></td></tr></table></figure></p>
-<p>就可以了，还是比较简单的</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/02/11/iOS/iOS熊孩子重复点击View问题的解决办法/" data-id="cinbvkw73000irps614lrwl3n" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/重复点击/">重复点击</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-iOS/关于iOS中View加载顺序的探究" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/01/29/iOS/关于iOS中View加载顺序的探究/" class="article-date">
-  <time datetime="2016-01-29T00:51:24.000Z" itemprop="datePublished">2016-01-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/29/iOS/关于iOS中View加载顺序的探究/">关于iOS中View加载顺序的探究</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>先上探究过程源代码：</p>
-<p>ViewController1：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">loadView</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>.loadView()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> bt = <span class="type">UIButton</span>(frame: <span class="type">CGRect</span>(x: <span class="number">100</span>, y: <span class="number">100</span>, width: <span class="number">100</span>, height: <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">    bt.setTitle(<span class="string">"to2"</span>, forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</span><br><span class="line"></span><br><span class="line">    bt.setTitleColor(<span class="type">UIColor</span>.blackColor(), forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</span><br><span class="line"></span><br><span class="line">    bt.addTarget(<span class="keyword">self</span>, action: <span class="string">"bt"</span>, forControlEvents: <span class="type">UIControlEvents</span>.<span class="type">TouchUpInside</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.view.addSubview(bt)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"load1"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"didload1"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"willappear1"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"didappear1"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillDisappear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"willdisappear1"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidDisappear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"diddisappear1"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">bt</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> vc = <span class="type">ViewController2</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.presentViewController(vc, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">ViewController2</span>：</span><br><span class="line">&lt;pre <span class="class"><span class="keyword">class</span>="<span class="title">prettyprint</span>"&gt;</span><br><span class="line"><span class="title">class</span> <span class="title">ViewController2</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">loadView</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>.loadView()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> bt = <span class="type">UIButton</span>(frame: <span class="type">CGRect</span>(x: <span class="number">100</span>, y: <span class="number">100</span>, width: <span class="number">100</span>, height: <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">    bt.setTitle(<span class="string">"to1"</span>, forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</span><br><span class="line"></span><br><span class="line">    bt.setTitleColor(<span class="type">UIColor</span>.blackColor(), forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</span><br><span class="line"></span><br><span class="line">    bt.addTarget(<span class="keyword">self</span>, action: <span class="string">"bt"</span>, forControlEvents: <span class="type">UIControlEvents</span>.<span class="type">TouchUpInside</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.view.addSubview(bt)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.view.backgroundColor = <span class="type">UIColor</span>.whiteColor()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"load2"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"didload2"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"willappear2"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidAppear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"didappear2"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillDisappear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"willdisappear2"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidDisappear</span><span class="params">(animated: Bool)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"diddisappear2"</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &amp;nbsp;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">bt</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> vc = <span class="type">ViewController2</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.dismissViewControllerAnimated(<span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>加载好View以后输出显示：</p>
-<p><strong>load1</strong></p>
-<p><strong>didload1</strong></p>
-<p><strong>willappear1</strong></p>
-<p><strong>didappear1</strong></p>
-<p>点击Button后显示：</p>
-<p><strong>load2</strong></p>
-<p><strong>didload2</strong></p>
-<p><strong>willdisappear1</strong></p>
-<p><strong>willappear2</strong></p>
-<p><strong>didappear2</strong></p>
-<p><strong>diddisappear1</strong></p>
-<p>可以看出在是先加载第二个View加载完毕后才会进行第一个View的消失操作，并且在第二个View显示完毕后才会执行第一个View的消失完成操作</p>
-<p>然后点击返回的第一个View的Button输出如下：</p>
-<p><strong>willdisappear2</strong></p>
-<p><strong>willappear1</strong></p>
-<p><strong>didappear1</strong></p>
-<p><strong>diddisappear2</strong></p>
-<p>可见与第一次的结果是相同的</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/01/29/iOS/关于iOS中View加载顺序的探究/" data-id="cinbvkw7b000orps6l17tdnuu" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Viewdidload/">Viewdidload</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/顺序/">顺序</a></li></ul>
 
     </footer>
   </div>
@@ -284,6 +274,14 @@
       <ul>
         
           <li>
+            <a href="/2016/04/27/ARC计数原理探究/">ARC计数原理探究</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/23/Andoid网络请求/">Andoid网络请求</a>
+          </li>
+        
+          <li>
             <a href="/2016/04/22/123/">123</a>
           </li>
         
@@ -293,14 +291,6 @@
         
           <li>
             <a href="/2016/04/16/Android/BroadCast广播机制/">BroadCast广播机制</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/01/iOS/iOS本地数据存储之CoreData/">iOS本地数据存储之CoreData</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/09/iOS/关于protocol的一些问题及解决办法/">关于protocol的一些问题及解决办法</a>
           </li>
         
       </ul>
