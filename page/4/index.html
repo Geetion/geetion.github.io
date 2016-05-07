@@ -105,7 +105,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/02/11/iOS/iOS熊孩子重复点击View问题的解决办法/" data-id="cinwuoz4w000f87059jxalgay" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2016/02/11/iOS/iOS熊孩子重复点击View问题的解决办法/" data-id="cinwwfpt8000jql056pgtawrq" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/重复点击/">重复点击</a></li></ul>
@@ -169,7 +169,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/01/29/iOS/关于iOS中View加载顺序的探究/" data-id="cinwuoz4z000i87056oio7hl6" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2016/01/29/iOS/关于iOS中View加载顺序的探究/" data-id="cinwwfptg000qql059k1gctur" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Viewdidload/">Viewdidload</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/顺序/">顺序</a></li></ul>
@@ -182,14 +182,14 @@
 
 
   
-    <article id="post-工欲善其事必先利其器,亮剑Sublime" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-iOS/用Swift解决iOS监听键盘高度调整View" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/01/16/工欲善其事必先利其器,亮剑Sublime/" class="article-date">
-  <time datetime="2016-01-16T01:01:37.000Z" itemprop="datePublished">2016-01-16</time>
+    <a href="/2016/01/25/iOS/用Swift解决iOS监听键盘高度调整View/" class="article-date">
+  <time datetime="2016-01-25T15:19:55.000Z" itemprop="datePublished">2016-01-25</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/技术向/">技术向</a>
+    <a class="article-category-link" href="/categories/移动前端/">移动前端</a>
   </div>
 
   </div>
@@ -200,7 +200,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/16/工欲善其事必先利其器,亮剑Sublime/">工欲善其事必先利其器,亮剑Sublime</a>
+      <a class="article-title" href="/2016/01/25/iOS/用Swift解决iOS监听键盘高度调整View/">用Swift解决iOS监听键盘高度调整View</a>
     </h1>
   
 
@@ -208,27 +208,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>关于比较新的Atom和老牌的Sublime，一开是我其实挺喜欢Atom的，主要是因为界面，atom一脸的小清新，sublime一脸的土气，但是作为程序员当然不能只是看脸了，毕竟剑锋不锋利还得看刃而不是剑鞘，所以我百度整理了atom对于老牌sublime的优缺点：</p>
-<ul>
-<li>类似css语法的快捷键绑定，可编程性更高；门槛低；</li>
-<li>基于chrome，每个窗口都是web页，比起emacs更加容易定制界面，如果说emacs像操作系统，那么atom简直就是更现代的云操作系统，web页面能实现的形式，atom都可以。相比，sublime更专注编辑，很难通过自定义扩展搞这么花哨；</li>
-<li>整合nodejs，可以基于github上无数的package肩膀上，继续二次开发，资源多，成本小；</li>
-<li>Tree视图等Atom更符合21世纪人的习惯</li>
-<li>源码集成上，在 Atom更改了代码如果没有提交，会在树视图上有颜色显示，作为源码版本控制github出品的Atom自然在这方面要强些，但是Sublime使用附加包就更强大了</li>
-<li>在性能上，Atom使用C++, Node.js, CoffeeScript构建，每个页面都是从本地HTML渲染，性能要差。<br>来源：知乎等网站</li>
-</ul>
-<p>总的来说atom就是界面好看，但是运行方面比sublime还是差一点，所以还是果断选择sublime</p>
-<p>选择好了代码编辑器，那么插件当然必不可少了，要想快速撸代码全副武装sublime吧：</p>
-<p>用package control 可以很方便的管理插件，而且安装简便，你只需要在sublime中按`ctrl+`` 调出console，然后前往<a href="https://packagecontrol.io/installation" target="_blank" rel="external">package control 官网</a>根据你的sublime版本复制右侧的一大堆代码到console中回车就安装好了。</p>
-<p>插件首先是各种代码补全：</p>
-<p>1.emmet：前身是大名鼎鼎的Zen coding，它使用仿CSS选择器的语法来生成代码，大大提高了HTML/CSS代码编写的速度</p>
-<p>2.sublimerepl ：这可能是对程序员最有用的插件。SublimeREPL 允许你在 Sublime Texxt 中运行各种语言（NodeJS ， Python，Ruby， Scala 和 Haskell 等等）</p>
-<p>&nbsp;</p>
+        <p>首先要调用NSNotifictionCenter来发送消息调整键盘高度<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">let</span> notifictionCenter = <span class="type">NSNotificationCenter</span>.defaultCenter()</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加观察者</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> notifictionCenter.addObserver(<span class="keyword">self</span>, selector: <span class="string">"keyboardDidShow:"</span>, name: <span class="type">UIKeyboardWillShowNotification</span>, object: <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line"> notifictionCenter.addObserver(<span class="keyword">self</span>, selector: <span class="string">"keyboardDidHide:"</span>, name: <span class="type">UIKeyboardWillHideNotification</span>, object: <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">func</span> <span class="title">keyboardDidHide</span><span class="params">(notification:NSNotification)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> userInfo = notification.userInfo <span class="keyword">as</span>! <span class="type">NSDictionary</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> value = (userInfo.objectForKey(<span class="string">"UIKeyboardFrameEndUserInfoKey"</span>)?.<span class="type">CGRectValue</span>)! <span class="keyword">as</span> <span class="type">CGRect</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> animationDuration = userInfo.objectForKey(<span class="string">"UIKeyboardAnimationDurationUserInfoKey"</span>) <span class="keyword">as</span>! <span class="type">Double</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(value.height)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">UIView</span>.setAnimationDuration(animationDuration)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  textView.frame.origin.y = <span class="keyword">self</span>.view.height - textView的高度 - value.height</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">UIView</span>.commitAnimations()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">keyboardDidHide</span><span class="params">(notification:NSNotification)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> userInfo = notification.userInfo <span class="keyword">as</span>! <span class="type">NSDictionary</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> animationDuration = userInfo.objectForKey(<span class="string">"UIKeyboardAnimationDurationUserInfoKey"</span>) <span class="keyword">as</span>! <span class="type">Double</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">UIView</span>.setAnimationDuration(animationDuration)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  backView.frame.origin.y = <span class="type">WINDOW_HEIGHT</span> - <span class="number">104</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="type">UIView</span>.commitAnimations()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的Userinfo里面包含了一些相关数据：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardAnimationCurveUserInfoKey</span> = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardAnimationDurationUserInfoKey</span> = <span class="string">"0.25"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardBoundsUserInfoKey</span> = <span class="string">"NSRect: &#123;&#123;0, 0&#125;, &#123;320, 253&#125;&#125;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardCenterBeginUserInfoKey</span> = <span class="string">"NSPoint: &#123;160, 694.5&#125;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardCenterEndUserInfoKey</span> = <span class="string">"NSPoint: &#123;160, 441.5&#125;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardFrameBeginUserInfoKey</span> = <span class="string">"NSRect: &#123;&#123;0, 568&#125;, &#123;320, 253&#125;&#125;"</span>;</span><br><span class="line">    <span class="type">UIKeyboardFrameEndUserInfoKey</span> = <span class="string">"NSRect: &#123;&#123;0, 315&#125;, &#123;320, 253&#125;&#125;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardIsLocalUserInfoKey</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>常用的有：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//键盘动画持续状态</span></span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardAnimationCurveUserInfoKey</span> = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//键盘变化动画持续时长</span></span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardAnimationDurationUserInfoKey</span> = <span class="string">"0.25"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//动画结束时键盘高度</span></span><br><span class="line"></span><br><span class="line">    <span class="type">UIKeyboardFrameEndUserInfoKey</span> = <span class="string">"NSRect: &#123;&#123;0, 315&#125;, &#123;320, 253&#125;&#125;"</span>;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ccjason.com/2016/01/16/工欲善其事必先利其器,亮剑Sublime/" data-id="cinwuoz3q000487055om8myb1" class="article-share-link">分享</a>
+      <a data-url="http://ccjason.com/2016/01/25/iOS/用Swift解决iOS监听键盘高度调整View/" data-id="cinwwfptp000wql05og9oeak9" class="article-share-link">分享</a>
       
       
     </footer>
@@ -242,7 +229,7 @@
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">__('next') &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">__('next') &raquo;</a>
   </nav>
 </section>
         
